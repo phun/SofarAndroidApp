@@ -1,6 +1,12 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.pm.PackageManager;
@@ -15,6 +21,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
 /**
  * Created by phun on 3/28/14.
  */
@@ -22,26 +36,46 @@ public class CameraFragment extends Fragment {
 
     private static final String TAG = "CameraFragment";
 
-    private Camera mCamera;
-    private CameraPreview mPreview;
+    public static final int MEDIA_TYPE_IMAGE = 1;
+    public static final int MEDIA_TYPE_VIDEO = 2;
+    public static final int CAMERA_RESULT = 3;
+
+    private Context context;
+    private Uri capturedImageUri;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.camera_fragment, container, false);
+        final View rootView = inflater.inflate(R.layout.camera_fragment, container, false);
 
-        // Create an instance of Camera
-        mCamera = getCameraInstance();
+        context = rootView.getContext();
 
-        if (mCamera != null) {
-            mCamera.setDisplayOrientation(90);
-        }
-
-        Log.v(TAG, mCamera.toString());
-
-        // Create our Preview view and set it as the content of our activity.
-        mPreview = new CameraPreview(rootView.getContext(), mCamera);
-        FrameLayout preview = (FrameLayout) rootView.findViewById(R.id.camera_preview);
-        preview.addView(mPreview);
+        final Button captureButton = (Button) rootView.findViewById(R.id.capture_button);
+        captureButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                Calendar cal = Calendar.getInstance();
+                File file = new File(Environment.getExternalStorageDirectory(),  (cal.getTimeInMillis()+".jpg"));
+                if(!file.exists()){
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }else{
+                    file.delete();
+                    try {
+                        file.createNewFile();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+                }
+                capturedImageUri = Uri.fromFile(file);
+                Intent i = new Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE);
+                i.putExtra(MediaStore.EXTRA_OUTPUT, capturedImageUri);
+                startActivityForResult(i, CAMERA_RESULT);
+            }
+        });
 
         final Button nextButton = (Button) rootView.findViewById(R.id.skip_button);
         nextButton.setOnClickListener(new View.OnClickListener() {
@@ -61,39 +95,28 @@ public class CameraFragment extends Fragment {
         }
     }
 
-    public static Camera getCameraInstance() {
-        Camera c = null;
-        int cameraCount = 0;
-        int camId = -1;
-        try {
-            Camera.CameraInfo cameraInfo = new Camera.CameraInfo();
-            cameraCount = Camera.getNumberOfCameras();
-
-            for (int camIdx = 0; camIdx < cameraCount; camIdx++) {
-                Camera.getCameraInfo(camIdx, cameraInfo);
-                if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_FRONT) {
-                    camId = camIdx;
-                }
-            }
-
-            if (camId > -1) {
-                c = Camera.open(camId);
-            } else {
-                c = Camera.open();
-            }
-
-        }
-        catch (Exception e){
-            Log.v(TAG, "No camera hardware.");
-        }
-        return c; // returns null if camera is unavailable
-    }
-
     private void showMapScreen() {
         Fragment newFragment = new MapListFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == CAMERA_RESULT) {
+            //Bitmap photo = (Bitmap) data.getExtras().get("data");
+            //imageView.setImageBitmap(photo);
+            try {
+                Bitmap bitmap = MediaStore.Images.Media.getBitmap( context.getContentResolver(),  capturedImageUri);
+                Log.v(TAG, "bitmap created.");
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 }

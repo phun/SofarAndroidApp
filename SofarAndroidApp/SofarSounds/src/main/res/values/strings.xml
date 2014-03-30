@@ -7,4 +7,11 @@
     <string name="register">Register</string>
     <string name="login">Login</string>
     <string name="next">Next</string>
+
+    <string name="pref_file_key">com.example.sofarsounds.PREFERENCE_FILE_KEY</string>
+
+    <string name="reg_fullname">reg_fullname</string>
+    <string name="reg_email">reg_email</string>
+    <string name="reg_password">reg_password</string>
+    <string name="cam_url">cam_url</string>
 </resources>
