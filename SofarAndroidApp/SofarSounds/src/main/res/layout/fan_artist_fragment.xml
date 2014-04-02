@@ -14,12 +14,14 @@
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Fan" />
+        android:text="Fan"
+        android:button="@layout/custom_checkbox" />
 
     <CheckBox
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Artist" />
+        android:text="Artist"
+        android:button="@layout/custom_checkbox" />
 
         <!--android:background="@drawable/my_checkbox_background"-->
         <!--android:button="@drawable/my_checkbox" />-->

@@ -4,9 +4,9 @@ package com.example.sofarsounds;
  * Created by phun on 3/27/14.
  */
 
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -56,6 +56,7 @@ public class MainFragment extends Fragment {
     private void showRegisterScreen() {
         Fragment newFragment = new RegisterFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();

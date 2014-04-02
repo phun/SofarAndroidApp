@@ -1,19 +1,11 @@
 package com.example.sofarsounds;
 
-import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.ActionBar;
-import android.support.v4.app.Fragment;
+import android.app.Activity;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.os.Build;
-import android.widget.Button;
 
-public class InitialActivity extends ActionBarActivity {
+public class InitialActivity extends Activity {
 
     private static final String TAG = "InitialActivity";
 
@@ -23,7 +15,7 @@ public class InitialActivity extends ActionBarActivity {
         setContentView(R.layout.activity_intial);
 
         if (savedInstanceState == null) {
-            getSupportFragmentManager().beginTransaction()
+            getFragmentManager().beginTransaction()
                     .add(R.id.initial_container, new MainFragment())
                     .commit();
         }
