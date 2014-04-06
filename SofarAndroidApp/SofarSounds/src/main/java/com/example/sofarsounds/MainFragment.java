@@ -4,6 +4,7 @@ package com.example.sofarsounds;
  * Created by phun on 3/27/14.
  */
 
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.os.Bundle;
@@ -61,4 +62,6 @@ public class MainFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();
     }
+
+
 }
