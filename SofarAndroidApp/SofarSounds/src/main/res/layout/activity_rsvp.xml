@@ -14,7 +14,8 @@
         android:text="Yes"
         android:id="@+id/RSVPyes"
         android:layout_centerVertical="true"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:onClick="thankYouAttending"/>
 
     <Button
         android:layout_width="wrap_content"
@@ -24,7 +25,8 @@
         android:layout_below="@+id/RSVPyes"
         android:layout_alignLeft="@+id/RSVPyes"
         android:layout_alignStart="@+id/RSVPyes"
-        android:layout_marginTop="57dp" />
+        android:layout_marginTop="57dp"
+        android:onClick="thankYouNotAttending"/>
 
     <TextView
         android:layout_width="wrap_content"

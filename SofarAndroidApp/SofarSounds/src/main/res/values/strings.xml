@@ -17,5 +17,10 @@
     <string name="RSVP_for_show">RSVP for show</string>
     <string name="title_activity_attendance_confirmation">AttendanceConfirmation</string>
     <string name="title_activity_waitlist">Waitlist</string>
+    <string name="title_activity_thank_you_coming">thankYouComing</string>
+    <string name="title_activity_thank_you_attending">ThankYouAttending</string>
+    <string name="title_activity_thank_you_not_attending">ThankYouNotAttending</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_activity_home_screen">HomeScreen</string>
 
 </resources>
