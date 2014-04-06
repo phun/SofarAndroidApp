@@ -55,6 +55,14 @@
             android:name="com.example.sofarsounds.RSVP"
             android:label="@string/title_activity_rsvp" >
         </activity>
+        <activity
+            android:name="com.example.sofarsounds.AttendanceConfirmation"
+            android:label="@string/title_activity_attendance_confirmation" >
+        </activity>
+        <activity
+            android:name="com.example.sofarsounds.Waitlist"
+            android:label="@string/title_activity_waitlist" >
+        </activity>
     </application>
 
 </manifest>

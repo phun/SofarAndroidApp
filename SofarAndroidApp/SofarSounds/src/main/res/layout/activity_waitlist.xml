@@ -6,13 +6,13 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context="com.example.sofarsounds.RSVP">
+    tools:context="com.example.sofarsounds.Waitlist">
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Yes"
-        android:id="@+id/RSVPyes"
+        android:id="@+id/waitlistYes"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true" />
 
@@ -20,28 +20,20 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="No"
-        android:id="@+id/RSVPno"
-        android:layout_below="@+id/RSVPyes"
-        android:layout_alignLeft="@+id/RSVPyes"
-        android:layout_alignStart="@+id/RSVPyes"
-        android:layout_marginTop="57dp" />
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="RSVP for show"
-        android:id="@+id/textView2"
-        android:layout_alignParentTop="true"
+        android:id="@+id/waitlistNo"
+        android:layout_below="@+id/waitlistYes"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="91dp" />
+        android:layout_marginTop="77dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Congratulations!  We're offering you a spot at the next Sofar show!  Will you be able to come?"
-        android:id="@+id/congrats"
-        android:layout_alignParentTop="true" />
+        android:text="You made the waitlist for the next Sofar show!  Do you want us to notify you if a spot becomes available?"
+        android:id="@+id/waitlistMessage"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="72dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
 
 </RelativeLayout>
