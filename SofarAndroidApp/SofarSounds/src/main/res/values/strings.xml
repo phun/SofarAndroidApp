@@ -14,5 +14,6 @@
     <string name="reg_password">reg_password</string>
     <string name="cam_url">cam_url</string>
     <string name="title_activity_rsvp">RSVP</string>
+    <string name="RSVP_for_show">RSVP for show</string>
 
 </resources>
