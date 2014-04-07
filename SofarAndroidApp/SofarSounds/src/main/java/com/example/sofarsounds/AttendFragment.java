@@ -1,26 +1,24 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
-import android.app.Fragment;
-import android.app.FragmentTransaction;
 import android.net.Uri;
 import android.os.Bundle;
+import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
  * Activities that contain this fragment must implement the
- * {@link Home.OnFragmentInteractionListener} interface
+ * {@link AttendFragment.OnFragmentInteractionListener} interface
  * to handle interaction events.
- * Use the {@link Home#newInstance} factory method to
+ * Use the {@link AttendFragment#newInstance} factory method to
  * create an instance of this fragment.
  *
  */
-public class Home extends Fragment {
+public class AttendFragment extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -38,18 +36,18 @@ public class Home extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment Home.
+     * @return A new instance of fragment AttendFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static Home newInstance(String param1, String param2) {
-        Home fragment = new Home();
+    public static AttendFragment newInstance(String param1, String param2) {
+        AttendFragment fragment = new AttendFragment();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-    public Home() {
+    public AttendFragment() {
         // Required empty public constructor
     }
 
@@ -66,54 +64,7 @@ public class Home extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
-        final Button attendButton = (Button) rootView.findViewById(R.id.attendButton);
-        attendButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showAttendScreen();
-            }
-        });
-
-        final Button showsButton = (Button) rootView.findViewById(R.id.showsButton);
-        showsButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showMyShowsScreen();
-            }
-        });
-
-        final Button profileButton = (Button) rootView.findViewById(R.id.profileButton);
-        profileButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showProfileScreen();
-            }
-        });
-
-        return rootView;
-    }
-
-
-    private void showAttendScreen() {
-        Fragment newFragment = new AttendFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void showMyShowsScreen() {
-        Fragment newFragment = new MyShowsFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void showProfileScreen() {
-        Fragment newFragment = new ProfileFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        return inflater.inflate(R.layout.fragment_attend, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
