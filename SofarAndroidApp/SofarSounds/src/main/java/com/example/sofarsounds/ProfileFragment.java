@@ -39,9 +39,9 @@ import java.util.Map;
  */
 public class ProfileFragment extends Fragment {
     private class ProfileTask extends AsyncTask<String, Void, JSONObject> {
-        private final Map<String, TextView> fields;
-        private ProfileTask(Map<String, TextView> fields) {
-            this.fields = fields;
+        private final View rootView;
+        private ProfileTask(View rootView) {
+            this.rootView = rootView;
         }
 
         @Override
@@ -73,14 +73,14 @@ public class ProfileFragment extends Fragment {
 
         @Override
         public void onPostExecute(JSONObject result) {
-            for (Map.Entry<String, TextView> entry : fields.entrySet()) {
-                TextView view = entry.getValue();
-                String jsonKey = entry.getKey();
-                try {
-                    view.setText(result.getString(jsonKey));
-                } catch (JSONException je) {
-                    Log.e("Profile", "Missing JSON key: " + jsonKey, je);
-                }
+            try {
+                String name = result.getString("Name");
+                String homeCity = result.getString("HomeCity");
+
+                ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
+                ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
+            } catch (JSONException je) {
+                Log.e("Profile", "Missing JSON key.", je);
             }
         }
     }
@@ -89,15 +89,7 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        Map<String, TextView> fields = new HashMap<String, TextView>(){{
-            put("Name", (TextView) rootView.findViewById(R.id.profileName));
-            put("HomeCity", (TextView) rootView.findViewById(R.id.profileHomeCity));
-            put("Interested", (TextView) rootView.findViewById(R.id.profileInterested));
-            put("Registered", (TextView) rootView.findViewById(R.id.profileRegistered));
-            put("Waitlisted", (TextView) rootView.findViewById(R.id.profileWaitlisted));
-            put("Shows", (TextView) rootView.findViewById(R.id.profileShows));
-        }};
-        new ProfileTask(fields).execute("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
+        new ProfileTask(rootView).execute("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
         return rootView;
     }
 }
