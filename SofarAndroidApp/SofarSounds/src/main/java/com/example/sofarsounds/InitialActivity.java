@@ -1,6 +1,7 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -15,12 +16,18 @@ public class InitialActivity extends Activity {
         setContentView(R.layout.activity_intial);
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
-                    .add(R.id.initial_container, new MainFragment())
-                    .commit();
+
+            if (!SofarSession.hasValidSession(this)) {
+                getFragmentManager().beginTransaction()
+                        .add(R.id.initial_container, new MainFragment())
+                        .commit();
+            } else {
+                getFragmentManager().beginTransaction()
+                        .add(R.id.initial_container, new Home())
+                        .commit();
+            }
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,4 +48,5 @@ public class InitialActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 }

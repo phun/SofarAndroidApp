@@ -43,19 +43,13 @@ public class MainFragment extends Fragment {
             }
         });
 
-        final Button homeButton = (Button) rootView.findViewById(R.id.initial_home_button);
-        homeButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-                showHomeScreen();
-            }
-        });
-
         return rootView;
     }
 
     private void showLoginScreen() {
         Fragment newFragment = new LoginFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
@@ -65,14 +59,6 @@ public class MainFragment extends Fragment {
         Fragment newFragment = new RegisterFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
-    }
-
-    private void showHomeScreen() {
-        Fragment newFragment = new Home();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
