@@ -1,17 +1,20 @@
 package com.example.sofarsounds;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 
 public class MainActivity extends ActionBarActivity {
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
-    }
+    // url to make request
+    private static String url = "http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile";
 
 
     @Override
@@ -32,6 +35,11 @@ public class MainActivity extends ActionBarActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void viewProfile(View view) {
+        Intent intent = new Intent(this, Profile.class);
+        startActivity(intent);
     }
 
 }

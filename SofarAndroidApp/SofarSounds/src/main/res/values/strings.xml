@@ -22,5 +22,8 @@
     <string name="title_activity_thank_you_not_attending">ThankYouNotAttending</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="title_activity_home_screen">HomeScreen</string>
+    <string name="title_activity_profile">Profile</string>
+    <string name="title_activity_display_json">DisplayJson</string>
+    <string name="com.example.sofarsounds.Profile.name">com.example.sofarsounds.Profile.name</string>
 
 </resources>
