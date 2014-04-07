@@ -33,60 +33,6 @@ public class Profile extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
-
-
-        DefaultHttpClient   httpclient = new DefaultHttpClient(new BasicHttpParams());
-        HttpPost httppost = new HttpPost("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
-// Depends on your web service
-        httppost.setHeader("Content-type", "application/json");
-
-        InputStream inputStream = null;
-        String result = null;
-
-        try {
-            HttpResponse response = httpclient.execute(httppost);
-            HttpEntity entity = response.getEntity();
-
-            inputStream = entity.getContent();
-            // json is UTF-8 by default
-            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-            StringBuilder sb = new StringBuilder();
-
-            String line = null;
-            while ((line = reader.readLine()) != null)
-            {
-                sb.append(line + "\n");
-            }
-            result = sb.toString();
-        } catch (Exception e) {
-            //
-
-        }
-        finally {
-            try{if(inputStream != null)inputStream.close();}catch(Exception squish){}
-
-        }
-
-        try {
-            JSONObject jObject = new JSONObject(result);
-
-
-            name = jObject.getString("Name");
-            ((TextView) findViewById(R.id.profileName)).setText(name);
-            homeCity = jObject.getString("HomeCity");
-            ((TextView) findViewById(R.id.profileHomeCity)).setText(homeCity);
-            interested = jObject.getString("Interested");
-            ((TextView) findViewById(R.id.profileInterested)).setText(interested);
-            registered = jObject.getString("Registered");
-            ((TextView) findViewById(R.id.profileRegistered)).setText(registered);
-            waitlisted = jObject.getString("Waitlisted");
-            ((TextView) findViewById(R.id.profileWaitlisted)).setText(waitlisted);
-            shows = jObject.getString("Shows");
-            ((TextView) findViewById(R.id.profileShows)).setText(shows);
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
     }
 
 
