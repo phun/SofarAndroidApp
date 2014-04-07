@@ -5,9 +5,96 @@
     tools:context="com.example.sofarsounds.AttendFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_gravity="center_horizontal|top">
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/attend_month"
+            android:entries="@array/months_array"
+            android:spinnerMode="dropdown"
+            android:layout_below="@+id/attend_greeting"
+            android:layout_toRightOf="@+id/attend_month_label"
+            android:padding="0dp"
+            android:focusable="false" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Secret gigs for:"
+            android:id="@+id/attend_month_label"
+            android:gravity="center"
+            android:layout_marginLeft="55dp"
+            android:layout_below="@+id/attend_greeting"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Hey Morris!"
+            android:id="@+id/attend_greeting"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="10dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Click the date you wish to attend. \nWe'll get in touch if we can squeeze you in!"
+            android:id="@+id/textView"
+            android:layout_below="@+id/attend_month"
+            android:layout_centerHorizontal="true"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Moved city?"
+            android:id="@+id/textView2"
+            android:layout_marginTop="43dp"
+            android:layout_below="@+id/textView"
+            android:layout_alignRight="@+id/attend_month_label"
+            android:layout_alignEnd="@+id/attend_month_label" />
+
+        <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Update"
+            android:id="@+id/button"
+            android:layout_alignBottom="@+id/textView2"
+            android:layout_alignRight="@+id/attend_greeting"
+            android:layout_alignEnd="@+id/attend_greeting" />
+
+        <ListView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/listView"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/button"
+            android:entries="@array/shows_array" />
+
+        <Spinner
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/spinner"
+            android:entries="@array/months_array"
+            android:spinnerMode="dropdown"
+            android:layout_below="@+id/attend_greeting"
+            android:layout_toRightOf="@+id/attend_month_label"
+            android:padding="0dp"
+            android:focusable="true" />
+
+    </RelativeLayout>
 
 </FrameLayout>
