@@ -44,7 +44,7 @@ public class MainFragment extends Fragment {
         });
 
         final Button homeButton = (Button) rootView.findViewById(R.id.initial_home_button);
-        registerButton.setOnClickListener(new View.OnClickListener() {
+        homeButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 showHomeScreen();
             }
