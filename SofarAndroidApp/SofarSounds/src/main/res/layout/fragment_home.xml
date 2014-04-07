@@ -25,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Attend"
-            android:id="@+id/attend"
+            android:id="@+id/attendButton"
             android:layout_centerVertical="true"
             android:layout_centerHorizontal="true" />
 
@@ -33,17 +33,18 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My Shows"
-            android:id="@+id/myShows"
-            android:layout_below="@+id/attend"
+            android:id="@+id/showsButton"
+            android:layout_below="@+id/attendButton"
             android:layout_centerHorizontal="true" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="My Profile"
-            android:id="@+id/myProfile"
-            android:layout_below="@+id/myShows"
-            android:layout_alignRight="@+id/myShows"
-            android:layout_alignEnd="@+id/myShows" />
+            android:id="@+id/profileButton"
+            android:layout_below="@+id/showsButton"
+            android:layout_alignRight="@+id/showsButton"
+            android:layout_alignEnd="@+id/showsButton"
+            android:onClick="viewProfile"/>
     </RelativeLayout>
 </FrameLayout>
