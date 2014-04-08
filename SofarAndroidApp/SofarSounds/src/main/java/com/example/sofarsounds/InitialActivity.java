@@ -52,7 +52,8 @@ public class InitialActivity extends Activity implements AttendFragment.OnShowSe
     @Override
     public void onShowSelected(ShowModel show) {
         getFragmentManager().beginTransaction()
-                .add(R.id.initial_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
+                .replace(R.id.initial_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
+                .addToBackStack(null)
                 .commit();
     }
 

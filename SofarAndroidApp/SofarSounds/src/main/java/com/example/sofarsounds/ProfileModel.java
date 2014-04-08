@@ -7,6 +7,15 @@ import java.util.List;
  * Created by lucid on 4/8/14.
  */
 public class ProfileModel {
+    public String getProfilePic() {
+        return profilePic;
+    }
+
+    public void setProfilePic(String profilePic) {
+        this.profilePic = profilePic;
+    }
+
+    private String profilePic = "";
 
     public String getName() {
         return name;

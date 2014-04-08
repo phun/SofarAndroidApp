@@ -98,7 +98,7 @@ public class Home extends Fragment {
     }
 
     private void showProfileScreen() {
-        Fragment newFragment = ProfileFragment.newInstance(currentUserProfile.getName(), currentUserProfile.getHomeCity());
+        Fragment newFragment = ProfileFragment.newInstance(currentUserProfile.getName(), currentUserProfile.getHomeCity(), currentUserProfile.getProfilePic());
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);

@@ -1,14 +1,19 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Base64;
+import android.util.Base64DataException;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
@@ -46,12 +51,13 @@ import static com.example.sofarsounds.R.*;
 public class ProfileFragment extends Fragment {
     private String name;
     private String homeCity;
-
-    public static  ProfileFragment newInstance(String name, String homeCity) {
+    private Bitmap profilePic;
+    public static  ProfileFragment newInstance(String name, String homeCity, String profilePic) {
         ProfileFragment fragment = new ProfileFragment();
         Bundle args = new Bundle();
         args.putString("name", name);
         args.putString("homeCity", homeCity);
+        args.putString("profilePic", profilePic);
         fragment.setArguments(args);
         return fragment;
     }
@@ -61,6 +67,9 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             name = getArguments().getString("name");
             homeCity = getArguments().getString("homeCity");
+            String encodedPic = getArguments().getString("profilePic");
+            byte[] decodedString = Base64.decode(encodedPic, Base64.DEFAULT);
+            profilePic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         }
     }
 
@@ -70,6 +79,7 @@ public class ProfileFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
         ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
+        ((ImageView) rootView.findViewById(id.profile_pic)).setImageBitmap(profilePic);
         return rootView;
     }
 
