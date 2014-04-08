@@ -1,5 +1,6 @@
 package com.example.sofarsounds;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -18,6 +19,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -47,6 +49,7 @@ public class MapListFragment extends Fragment {
             "Reykjavik", "Rio", "San Francisco", "San Jose (Costa Rica)", "Santiago", "Seattle",
             "Singapore", "Stockholm", "Sydney", "São Paulo", "Tallinn", "Tokyo", "Toronto",
             "Vilnius", "Winchester", "York" };
+    private String nearestCity = "Boston";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -62,7 +65,30 @@ public class MapListFragment extends Fragment {
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
 
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.setContentView(R.layout.nearest_city_dialog);
+        dialog.setTitle("Nearest City Found!");
+
+        Button saveButton = (Button) dialog.findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                setCity(nearestCity);
+            }
+        });
+        Button btnCancel= (Button) dialog.findViewById(R.id.cancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.hide();
+            }
+        });
+        dialog.show();
+
         return rootView;
+    }
+
+    private void setCity(String city) {
+
     }
 
     private String nearestCity(Location location) {

@@ -20,6 +20,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -43,11 +44,15 @@ public class CameraFragment extends Fragment {
     private Context context;
     private Uri capturedImageUri;
 
+    private ImageView imageView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.camera_fragment, container, false);
 
         context = rootView.getContext();
+
+        imageView = (ImageView) rootView.findViewById(R.id.imageView);
 
         final Button captureButton = (Button) rootView.findViewById(R.id.capture_button);
         captureButton.setOnClickListener(new View.OnClickListener() {
@@ -106,10 +111,10 @@ public class CameraFragment extends Fragment {
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == CAMERA_RESULT) {
-            //Bitmap photo = (Bitmap) data.getExtras().get("data");
-            //imageView.setImageBitmap(photo);
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap( context.getContentResolver(),  capturedImageUri);
+                imageView.setBackground(null);
+                imageView.setImageBitmap(bitmap);
                 Log.v(TAG, "bitmap created.");
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block

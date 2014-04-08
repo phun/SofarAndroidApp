@@ -45,6 +45,11 @@
         <activity
             android:name="com.example.sofarsounds.InitialActivity"
             android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
         </activity>
         <activity
             android:name="com.example.sofarsounds.RSVP"
@@ -81,11 +86,6 @@
         <activity
             android:name="com.example.sofarsounds.ReliveActivity"
             android:label="@string/title_activity_relive" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 
