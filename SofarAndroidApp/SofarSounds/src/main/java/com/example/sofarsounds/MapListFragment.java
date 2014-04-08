@@ -2,8 +2,11 @@ package com.example.sofarsounds;
 
 import android.app.Dialog;
 import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.location.Address;
@@ -18,9 +21,11 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
 
@@ -38,6 +43,8 @@ import java.util.Locale;
 public class MapListFragment extends Fragment {
 
     private static final String TAG = "MapListFragment";
+
+    private SharedPreferences sharedPref;
     private static String[] CITIES = new String[] { "Aalborg (Denmark)", "Aarhus (Denmark)", "Amsterdam", "Atlanta",
             "Auckland", "Austin", "Barcelona", "Beijing", "Beirut", "Belo Horizonte", "Bergamo (Italy)",
             "Bergen (Norway)", "Berlin", "Birmingham", "Boston, MA", "Brasilia", "Brighton", "Brisbane",
@@ -56,7 +63,6 @@ public class MapListFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.map_list_fragment, container, false);
 
         final ListView listview = (ListView) rootView.findViewById(R.id.list_view);
-
         final ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < CITIES.length; ++i) {
             list.add(CITIES[i]);
@@ -64,6 +70,17 @@ public class MapListFragment extends Fragment {
         final StableArrayAdapter adapter = new StableArrayAdapter(rootView.getContext(),
                 android.R.layout.simple_list_item_1, list);
         listview.setAdapter(adapter);
+        listview.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                showConfirmationDialog(CITIES[i]);
+            }
+        });
+
+        Context context = rootView.getContext();
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.pref_file_key), Context.MODE_PRIVATE);
 
         final Dialog dialog = new Dialog(getActivity());
 
@@ -73,13 +90,14 @@ public class MapListFragment extends Fragment {
         Button saveButton = (Button) dialog.findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
+                dialog.dismiss();
                 setCity(nearestCity);
             }
         });
         Button btnCancel= (Button) dialog.findViewById(R.id.cancel);
         btnCancel.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                dialog.hide();
+                dialog.dismiss();
             }
         });
         dialog.show();
@@ -87,8 +105,45 @@ public class MapListFragment extends Fragment {
         return rootView;
     }
 
-    private void setCity(String city) {
+    private void showConfirmationDialog(final String city) {
+        final Dialog dialog = new Dialog(getActivity());
 
+        dialog.setContentView(R.layout.confirm_city_dialog);
+        dialog.setTitle("Confirmation");
+
+        TextView cityView = (TextView) dialog.findViewById(R.id.city);
+        cityView.setText(city);
+
+        Button saveButton = (Button) dialog.findViewById(R.id.save);
+        saveButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+                setCity(city);
+            }
+        });
+        Button btnCancel= (Button) dialog.findViewById(R.id.cancel);
+        btnCancel.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
+    private void setCity(String city) {
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(getString(R.string.reg_city), city);
+        submitRegistration();
+    }
+
+    public void submitRegistration() {
+        SofarSession.openNewSession(getActivity().getApplicationContext(), "foo", "bar");
+
+        Fragment newFragment = new Home();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.initial_container, newFragment);
+        getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        transaction.commit();
     }
 
     private String nearestCity(Location location) {
