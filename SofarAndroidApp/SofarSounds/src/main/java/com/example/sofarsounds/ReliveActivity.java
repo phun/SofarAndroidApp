@@ -68,6 +68,7 @@ public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
         youTubePlayer.loadVideo(VIDEO);
+        youTubePlayer.pause();
     }
 
     @Override

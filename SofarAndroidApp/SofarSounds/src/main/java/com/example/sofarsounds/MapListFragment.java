@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -16,11 +17,13 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -32,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.URL;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -59,6 +63,8 @@ public class MapListFragment extends Fragment {
             "Vilnius", "Winchester", "York" };
     private String nearestCity = "Boston, MA";
 
+    private SearchView searchView;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map_list_fragment, container, false);
@@ -85,7 +91,7 @@ public class MapListFragment extends Fragment {
 
         showNearestCityDialog();
 
-        final SearchView searchView = (SearchView) rootView.findViewById(R.id.search);
+        searchView = (SearchView) rootView.findViewById(R.id.search);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -106,9 +112,8 @@ public class MapListFragment extends Fragment {
                     locationObj.setLongitude(location.getLongitude());
                     locationObj.setLatitude(location.getLatitude());
 
-
-                    ChangeNearestCity(locationObj);
-                    showNearestCityDialog();
+                    FindNearestCityTask t = new FindNearestCityTask();
+                    t.execute(locationObj);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -178,7 +183,6 @@ public class MapListFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.reg_city), city);
         editor.commit();
-        Log.v(TAG, sharedPref.getString(getString(R.string.reg_city), "Boston"));
         submitRegistration();
     }
 
@@ -194,38 +198,7 @@ public class MapListFragment extends Fragment {
     }
 
     private void ChangeNearestCity(Location location) {
-        double longitude = location.getLongitude();
-        double latitude = location.getLatitude();
 
-        float nearestDistance = Float.MAX_VALUE;
-
-        Log.v(TAG, "LONG: " + String.valueOf(longitude));
-        Log.v(TAG, "LAT: " + String.valueOf(latitude));
-        if (Geocoder.isPresent()) {
-            try {
-                Geocoder gc = new Geocoder(getActivity().getApplicationContext());
-
-                for (String city : CITIES) {
-                    List<Address> address = gc.getFromLocationName(city, 1);
-                    Log.v(TAG, "size:" + address.size());
-
-                    if (address.size() > 0 && address.get(0).hasLatitude() && address.get(0).hasLongitude()) {
-                        Location locationB = new Location("city");
-
-                        locationB.setLatitude(address.get(0).getLatitude());
-                        locationB.setLongitude(address.get(0).getLongitude());
-                        Log.v(TAG, "city: " + city + " - dist: " + String.valueOf(location.distanceTo(locationB)));
-                        if (location.distanceTo(locationB) < nearestDistance) {
-                            nearestDistance = location.distanceTo(locationB);
-                            nearestCity = city;
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                Log.e(TAG, e.getMessage());
-            }
-            Log.v(TAG, "nearest: " + nearestCity);
-        }
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {
@@ -249,6 +222,60 @@ public class MapListFragment extends Fragment {
         @Override
         public boolean hasStableIds() {
             return true;
+        }
+    }
+
+    private class FindNearestCityTask extends AsyncTask<Location, Void, String> {
+
+        ProgressDialog progressDialog;
+
+        @Override
+        protected String doInBackground(Location... locations) {
+            Location location = locations[0];
+
+            String nearestCity = null;
+            float nearestDistance = Float.MAX_VALUE;
+
+            if (Geocoder.isPresent()) {
+                try {
+                    Geocoder gc = new Geocoder(getActivity().getApplicationContext());
+
+                    for (String city : CITIES) {
+                        List<Address> address = gc.getFromLocationName(city, 1);
+
+                        if (address.size() > 0 && address.get(0).hasLatitude() && address.get(0).hasLongitude()) {
+                            Location locationB = new Location("city");
+
+                            locationB.setLatitude(address.get(0).getLatitude());
+                            locationB.setLongitude(address.get(0).getLongitude());
+                            Log.v(TAG, "city: " + city + " - dist: " + String.valueOf(location.distanceTo(locationB)));
+                            if (location.distanceTo(locationB) < nearestDistance) {
+                                nearestDistance = location.distanceTo(locationB);
+                                nearestCity = city;
+                            }
+                        }
+                    }
+                } catch (IOException e) {
+                    Log.e(TAG, e.getMessage());
+                }
+            }
+            return nearestCity;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                    Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(searchView.getWindowToken(), 0);
+            progressDialog = ProgressDialog.show(getActivity(),
+                    "Searching for Nearest City", "Please wait...");
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            progressDialog.dismiss();
+            nearestCity = result;
+            showNearestCityDialog();
         }
     }
 }

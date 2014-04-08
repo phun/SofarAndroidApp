@@ -1,16 +1,22 @@
 package com.example.sofarsounds;
 
+import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
+
+import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Created by phun on 3/27/14.
@@ -42,7 +48,6 @@ public class RegisterFragment extends Fragment {
         nextButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 saveRegistration();
-                showCameraScreen();
             }
         });
 
@@ -50,17 +55,54 @@ public class RegisterFragment extends Fragment {
     }
 
     private void saveRegistration() {
-        SharedPreferences.Editor editor = sharedPref.edit();
 
-        editor.putString(getString(R.string.reg_fullname), fullname.getText().toString());
-        editor.putString(getString(R.string.reg_email), email.getText().toString());
-        editor.putString(getString(R.string.reg_password), password.getText().toString());
-        editor.commit();
+        ArrayList<String> errors = new ArrayList<String>();
 
-        Log.v("REG", sharedPref.getString(getString(R.string.reg_fullname), "DEFAULT"));
-        Log.v("REG", sharedPref.getString(getString(R.string.reg_email), "DEFAULT"));
-        Log.v("REG", sharedPref.getString(getString(R.string.reg_password), "DEFAULT"));
+        if (!isValidEmail(email.getText().toString())) {
+            errors.add("Invalid e-mail address.");
+        }
 
+        if (!matchingPasswords(password.getText().toString(), password2.getText().toString())) {
+            errors.add("Passwords don't match.");
+        }
+
+        if (errors.size() > 0) {
+            final Dialog dialog = new Dialog(getActivity());
+
+            dialog.setContentView(R.layout.registration_errors_dialog);
+            dialog.setTitle("Uh oh!");
+
+            String errorHtml = "";
+            Iterator<String> iterator = errors.iterator();
+            while(iterator.hasNext()) {
+                errorHtml += "&#8226;" + iterator.next() + "<br/>";
+            }
+
+            final TextView errorView = (TextView) dialog.findViewById(R.id.errors);
+            errorView.setText(Html.fromHtml(errorHtml));
+
+            final Button okay = (Button) dialog.findViewById(R.id.okay);
+            okay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        } else {
+            SharedPreferences.Editor editor = sharedPref.edit();
+
+            editor.putString(getString(R.string.reg_fullname), fullname.getText().toString());
+            editor.putString(getString(R.string.reg_email), email.getText().toString());
+            editor.putString(getString(R.string.reg_password), password.getText().toString());
+            editor.commit();
+
+            Log.v("REG", sharedPref.getString(getString(R.string.reg_fullname), "DEFAULT"));
+            Log.v("REG", sharedPref.getString(getString(R.string.reg_email), "DEFAULT"));
+            Log.v("REG", sharedPref.getString(getString(R.string.reg_password), "DEFAULT"));
+            showCameraScreen();
+        }
     }
 
     private void showCameraScreen() {
@@ -70,5 +112,17 @@ public class RegisterFragment extends Fragment {
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
+    }
+
+    public final static boolean isValidEmail(CharSequence target) {
+        if (target == null) {
+            return false;
+        } else {
+            return android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+        }
+    }
+
+    public final static boolean matchingPasswords(CharSequence p1, CharSequence p2) {
+        return p1 != null && p1.length() > 0 && p1.equals(p2);
     }
 }

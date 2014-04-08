@@ -39,7 +39,7 @@
         android:layout_marginTop="10dp">
 
 
-        <Button
+        <Button style="@style/black_button"
             android:id="@+id/save"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
@@ -48,7 +48,7 @@
             android:text="Select"
             />
 
-        <Button
+        <Button style="@style/black_button"
             android:id="@+id/cancel"
             android:layout_marginTop="15dp"
             android:layout_weight="1"

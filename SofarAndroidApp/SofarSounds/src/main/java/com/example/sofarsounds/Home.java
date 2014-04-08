@@ -3,12 +3,14 @@ package com.example.sofarsounds;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -27,16 +29,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-
-/**
- * A simple {@link android.support.v4.app.Fragment} subclass.
- * Activities that contain this fragment must implement the
- * {@link Home.OnFragmentInteractionListener} interface
- * to handle interaction events.
- * Use the {@link Home#newInstance} factory method to
- * create an instance of this fragment.
- *
- */
 public class Home extends Fragment {
     private SharedPreferences sharedPref;
     private ProfileModel currentUserProfile;
@@ -45,6 +37,11 @@ public class Home extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+
         final Button attendButton = (Button) rootView.findViewById(R.id.attendButton);
         attendButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -102,11 +99,13 @@ public class Home extends Fragment {
     }
 
     private void showMyShowsScreen() {
-        Fragment newFragment = new MyShowsFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+//        Fragment newFragment = new MyShowsFragment();
+//        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+//        transaction.replace(R.id.initial_container, newFragment);
+//        transaction.addToBackStack(null);
+//        transaction.commit();
+        Intent intent = new Intent(getActivity(), ReliveActivity.class);
+        startActivity(intent);
     }
 
     private void showProfileScreen() {

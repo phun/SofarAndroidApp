@@ -4,22 +4,13 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button style="@style/black_button"
-        android:id="@+id/skip_button"
-        android:text="Skip"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:background="@android:color/darker_gray"
-        />
-
     <SearchView android:id="@+id/search"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
         android:iconifiedByDefault="false"
-        android:queryHint="Search for a City" />
+        android:queryHint="Enter Your Location..." />
 
     <ListView
         android:layout_width="fill_parent"
