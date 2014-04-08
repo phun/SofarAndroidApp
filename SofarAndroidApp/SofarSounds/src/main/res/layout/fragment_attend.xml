@@ -72,8 +72,7 @@
             android:text="Update"
             android:id="@+id/button"
             android:layout_alignBottom="@+id/textView2"
-            android:layout_alignRight="@+id/attend_greeting"
-            android:layout_alignEnd="@+id/attend_greeting" />
+            android:layout_toRightOf="@+id/attend_greeting" />
 
         <ListView
             android:layout_width="wrap_content"

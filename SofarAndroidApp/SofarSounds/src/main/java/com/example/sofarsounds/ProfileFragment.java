@@ -17,6 +17,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -24,8 +25,11 @@ import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+
+import static com.example.sofarsounds.R.*;
 
 
 /**
@@ -76,9 +80,23 @@ public class ProfileFragment extends Fragment {
             try {
                 String name = result.getString("Name");
                 String homeCity = result.getString("HomeCity");
+                JSONArray interested = result.getJSONArray("Interested");
 
-                ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
-                ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
+                ArrayList<String> interestedList = new ArrayList<String>();
+                for (int i=0; i < interested.length(); i++)
+                {
+                    try {
+                        JSONObject oneObject = interested.getJSONObject(i);
+                        // Pulling items from the array
+                        interestedList.add(interested.getJSONObject(i).getString("City") + " " + interested.getJSONObject(i).getString("Date"));
+                    } catch (JSONException e) {
+                        // Oops
+                    }
+                }
+
+            //    ((TextView) rootView.findViewById(id.profileName)).setText(name);
+            //    ((TextView) rootView.findViewById(id.profileHomeCity)).setText(homeCity);
+ //               ((TextView) rootView.findViewById(id.profileInterested)).setText(interested);
             } catch (JSONException je) {
                 Log.e("Profile", "Missing JSON key.", je);
             }
@@ -88,7 +106,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
+        final View rootView = inflater.inflate(layout.fragment_profile, container, false);
         new ProfileTask(rootView).execute("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
         return rootView;
     }
