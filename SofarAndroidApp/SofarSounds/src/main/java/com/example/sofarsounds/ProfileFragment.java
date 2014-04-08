@@ -11,6 +11,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
@@ -42,14 +44,14 @@ import static com.example.sofarsounds.R.*;
  *
  */
 public class ProfileFragment extends Fragment {
-    private class ProfileTask extends AsyncTask<String, Void, JSONObject> {
+    private class ProfileTask extends AsyncTask<String, Void, ProfileModel> {
         private final View rootView;
         private ProfileTask(View rootView) {
             this.rootView = rootView;
         }
 
         @Override
-        protected JSONObject doInBackground(String... urls) {
+        protected ProfileModel doInBackground(String... urls) {
             try {
                 DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
                 HttpGet get = new HttpGet(urls[0]);
@@ -59,16 +61,9 @@ public class ProfileFragment extends Fragment {
                 InputStream inputStream = entity.getContent();
                 // json is UTF-8 by default
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                StringBuilder sb = new StringBuilder();
-
-                String line = null;
-                while ((line = reader.readLine()) != null)
-                {
-                    sb.append(line + "\n");
-                }
-                String result = sb.toString();
-                JSONObject jObject = new JSONObject(result);
-                return jObject;
+                Gson gson = new Gson();
+                ProfileModel profile = gson.fromJson(reader, ProfileModel.class);
+                return profile;
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -76,30 +71,14 @@ public class ProfileFragment extends Fragment {
         }
 
         @Override
-        public void onPostExecute(JSONObject result) {
-            try {
-                String name = result.getString("Name");
-                String homeCity = result.getString("HomeCity");
-                JSONArray interested = result.getJSONArray("Interested");
-
-                ArrayList<String> interestedList = new ArrayList<String>();
-                for (int i=0; i < interested.length(); i++)
-                {
-                    try {
-                        JSONObject oneObject = interested.getJSONObject(i);
-                        // Pulling items from the array
-                        interestedList.add(interested.getJSONObject(i).getString("City") + " " + interested.getJSONObject(i).getString("Date"));
-                    } catch (JSONException e) {
-                        // Oops
-                    }
-                }
+        public void onPostExecute(ProfileModel result) {
+                String name = result.getName();//result.getString("Name");
+                String homeCity = result.getHomeCity();//result.getString("HomeCity");
 
                 ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
                 ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
  //               ((TextView) rootView.findViewById(R.id.profileInterested)).setText(interested);
-            } catch (JSONException je) {
-                Log.e("Profile", "Missing JSON key.", je);
-            }
+
         }
     }
 
