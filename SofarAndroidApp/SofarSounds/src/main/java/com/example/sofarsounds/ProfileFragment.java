@@ -44,41 +44,23 @@ import static com.example.sofarsounds.R.*;
  *
  */
 public class ProfileFragment extends Fragment {
-    private class ProfileTask extends AsyncTask<String, Void, ProfileModel> {
-        private final View rootView;
-        private ProfileTask(View rootView) {
-            this.rootView = rootView;
-        }
+    private String name;
+    private String homeCity;
 
-        @Override
-        protected ProfileModel doInBackground(String... urls) {
-            try {
-                DefaultHttpClient httpclient = new DefaultHttpClient(new BasicHttpParams());
-                HttpGet get = new HttpGet(urls[0]);
-                get.setHeader("Accept", "application/json");
-                HttpResponse response = httpclient.execute(get);
-                HttpEntity entity = response.getEntity();
-                InputStream inputStream = entity.getContent();
-                // json is UTF-8 by default
-                BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream, "UTF-8"), 8);
-                Gson gson = new Gson();
-                ProfileModel profile = gson.fromJson(reader, ProfileModel.class);
-                return profile;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            return null;
-        }
-
-        @Override
-        public void onPostExecute(ProfileModel result) {
-                String name = result.getName();//result.getString("Name");
-                String homeCity = result.getHomeCity();//result.getString("HomeCity");
-
-                ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
-                ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
- //               ((TextView) rootView.findViewById(R.id.profileInterested)).setText(interested);
-
+    public static  ProfileFragment newInstance(String name, String homeCity) {
+        ProfileFragment fragment = new ProfileFragment();
+        Bundle args = new Bundle();
+        args.putString("name", name);
+        args.putString("homeCity", homeCity);
+        fragment.setArguments(args);
+        return fragment;
+    }
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            name = getArguments().getString("name");
+            homeCity = getArguments().getString("homeCity");
         }
     }
 
@@ -86,7 +68,11 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        new ProfileTask(rootView).execute("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
+        ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
+        ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
         return rootView;
     }
+
+
+
 }

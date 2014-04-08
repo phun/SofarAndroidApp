@@ -1,12 +1,19 @@
 package com.example.sofarsounds;
 
-import android.app.Activity;
-import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+
+import com.android.internal.util.Predicate;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Lists;
+
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -19,80 +26,75 @@ import android.view.ViewGroup;
  *
  */
 public class AttendFragment extends Fragment {
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    private List<ShowModel> shows;
+    private ProfileModel profile;
+    private List<ShowModel> homeShows;
+    private List<ShowModel> recentShows;
+    private List<ShowModel> otherShows;
+    // TODO: Why do the convoluted newInstance / Bundle storage thing and not this:
+    public AttendFragment(List<ShowModel> shows, ProfileModel profile) {
+        this.profile = profile;
+        this.shows = shows;
 
-    private OnFragmentInteractionListener mListener;
-
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment AttendFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static AttendFragment newInstance(String param1, String param2) {
-        AttendFragment fragment = new AttendFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
-    public AttendFragment() {
-        // Required empty public constructor
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+        homeShows = Lists.newArrayList();
+        recentShows = Lists.newArrayList();
+        otherShows = Lists.newArrayList();
+        // Filter shows into categories:
+        for (ShowModel show : shows) {
+            if (show.getCity().equals(profile.getHomeCity())) {
+                homeShows.add(show);
+            } else if (profile.isRecentCity(show.getCity())) {
+                recentShows.add(show);
+            } else {
+                otherShows.add(show);
+            }
         }
     }
+    public static final String[] cities = new String[] { "Strawberry",
+            "Banana", "Orange", "Mixed" };
+
+    public static final String[] dates = new String[] {
+            "It is an aggregate accessory fruit",
+            "It is the largest herbaceous flowering plant", "Citrus Fruit",
+            "Mixed Fruits" };
+
+    private final int HOME_ICON = R.drawable.home;
+    private final int RECENT_ICON = R.drawable.android_location;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_attend, container, false);
-    }
+        View rootView = inflater.inflate(R.layout.fragment_attend, container, false);
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
+        List<ShowRowItem> rowItems = new ArrayList<ShowRowItem>();
+        // Show HOME shows first, then RECENT shows, then the rest.
+        for (ShowModel show : homeShows) {
+            ShowRowItem item = new ShowRowItem(HOME_ICON, show.getCity(), show.getDate());
+            rowItems.add(item);
         }
-    }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
-    }
+        for (ShowModel show : recentShows) {
+            ShowRowItem item = new ShowRowItem(RECENT_ICON, show.getCity(), show.getDate());
+            rowItems.add(item);
+        }
 
-    /**
-     * This interface must be implemented by activities that contain this
-     * fragment to allow an interaction in this fragment to be communicated
-     * to the activity and potentially other fragments contained in that
-     * activity.
-     * <p>
-     * See the Android Training lesson <a href=
-     * "http://developer.android.com/training/basics/fragments/communicating.html"
-     * >Communicating with Other Fragments</a> for more information.
-     */
-    public interface OnFragmentInteractionListener {
-        // TODO: Update argument type and name
-        public void onFragmentInteraction(Uri uri);
-    }
+        for (ShowModel show : otherShows) {
+            ShowRowItem item = new ShowRowItem(show.getCity(), show.getDate());
+            rowItems.add(item);
+        }
 
+        ListView listView = (ListView) rootView.findViewById(R.id.shows_listview);
+        ShowListViewAdapter adapter = new ShowListViewAdapter(rootView.getContext(),
+                R.layout.show_list_item, rowItems);
+        listView.setAdapter(adapter);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+            }
+        });
+        return rootView;
+    }
 }

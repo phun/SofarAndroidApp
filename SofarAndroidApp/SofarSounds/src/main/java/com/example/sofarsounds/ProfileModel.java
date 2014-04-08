@@ -18,18 +18,15 @@ public class ProfileModel {
 
     private String name = "";
 
-    public boolean isSpecialCity(String city) {
-        return this.specialCities.contains(city);
-    }
-    public List<String> getSpecialCities() {
-        return specialCities;
+    public List<String> getRecentCities() {
+        return recentCities;
     }
 
-    public void setSpecialCities(List<String> specialCities) {
-        this.specialCities = specialCities;
+    public void setRecentCities(List<String> recentCities) {
+        this.recentCities = recentCities;
     }
 
-    private List<String> specialCities = Arrays.asList("LA", "Los Angeles", "New York");
+    private List<String> recentCities = Arrays.asList("LA", "Los Angeles", "New York", "Boston");
 
     public String getHomeCity() {
         return homeCity;
@@ -79,4 +76,17 @@ public class ProfileModel {
     private List<ShowModel> registered;
     private List<ShowModel> waitlisted;
     private List<ShowModel> shows;
+
+    public boolean isRecentCity(String city) {
+        return this.recentCities.contains(city);
+    }
+    public boolean isWaitlistedFor(ShowModel showModel) {
+        return waitlisted.contains(showModel);
+    }
+    public boolean isRegisteredFor(ShowModel show) {
+        return registered.contains(show);
+    }
+    public boolean isInteterestedIn(ShowModel show) {
+        return interested.contains(show);
+    }
 }
