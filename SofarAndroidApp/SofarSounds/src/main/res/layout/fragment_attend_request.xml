@@ -4,6 +4,18 @@
     android:layout_height="match_parent"
     tools:context="com.example.sofarsounds.AttendRequestFragment">
 
+    <ImageView
+        android:id="@+id/attend_bg"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" android:src="@drawable/attend_bg"
+        android:scaleType="centerCrop"
+        android:baselineAlignBottom="true"
+        android:adjustViewBounds="false"
+        android:alpha="0.2" />
+
+
     <!-- TODO: Update blank fragment layout -->
 
     <LinearLayout
@@ -12,7 +24,9 @@
         android:layout_height="fill_parent"
         android:weightSum="1"
         android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp">
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,7 +34,9 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Sofar City"
             android:id="@+id/request_city"
-            android:layout_gravity="center_horizontal|top" />
+            android:layout_gravity="center_horizontal|top"
+            android:textStyle="bold"
+            android:textSize="40dp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -36,15 +52,18 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Tell us why you are psyched to attend."
             android:id="@+id/textView3"
-            android:layout_margin="20dp" />
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="20dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="(P.S. please make sure all your +1s are registered with Sofar as well)"
+            android:text="NOTE: please make sure all your +1's are registered"
             android:id="@+id/textView4"
-            android:layout_margin="20dp" />
+            android:layout_margin="20dp"
+            android:textSize="12dp" />
 
         <EditText
             android:layout_width="match_parent"
@@ -56,11 +75,10 @@
             android:layout_weight="0.35"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
-            android:hint="Tell us more..."
-            android:text="Tell us more..." />
+            android:hint="Tell us more..." />
 
-        <Button
-            android:layout_width="wrap_content"
+        <Button style="@style/black_button"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:text="Send"
             android:id="@+id/request_button"
