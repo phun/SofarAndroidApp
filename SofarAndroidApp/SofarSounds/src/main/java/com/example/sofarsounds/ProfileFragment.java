@@ -94,9 +94,9 @@ public class ProfileFragment extends Fragment {
                     }
                 }
 
-            //    ((TextView) rootView.findViewById(id.profileName)).setText(name);
-            //    ((TextView) rootView.findViewById(id.profileHomeCity)).setText(homeCity);
- //               ((TextView) rootView.findViewById(id.profileInterested)).setText(interested);
+                ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
+                ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
+ //               ((TextView) rootView.findViewById(R.id.profileInterested)).setText(interested);
             } catch (JSONException je) {
                 Log.e("Profile", "Missing JSON key.", je);
             }
@@ -106,7 +106,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        final View rootView = inflater.inflate(layout.fragment_profile, container, false);
+        final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
         new ProfileTask(rootView).execute("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
         return rootView;
     }
