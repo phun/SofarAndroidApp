@@ -6,7 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class InitialActivity extends Activity {
+public class InitialActivity extends Activity implements AttendFragment.OnShowSelectedListener, AttendRequestFragment.OnRequestSubmit{
 
     private static final String TAG = "InitialActivity";
 
@@ -49,4 +49,15 @@ public class InitialActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onShowSelected(ShowModel show) {
+        getFragmentManager().beginTransaction()
+                .add(R.id.initial_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
+                .commit();
+    }
+
+    @Override
+    public void onRequestSubmit(String request) {
+
+    }
 }

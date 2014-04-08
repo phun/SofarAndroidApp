@@ -1,5 +1,7 @@
 package com.example.sofarsounds;
 
+import android.app.Activity;
+import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +28,8 @@ import java.util.List;
  *
  */
 public class AttendFragment extends Fragment {
+
+    private OnShowSelectedListener mListener;
 
     private List<ShowModel> shows;
     private ProfileModel profile;
@@ -68,21 +72,25 @@ public class AttendFragment extends Fragment {
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_attend, container, false);
 
-        List<ShowRowItem> rowItems = new ArrayList<ShowRowItem>();
+        List<ShowRowItem> rowItems = Lists.newArrayList();
+        final List<ShowModel> showModels = Lists.newArrayList();
         // Show HOME shows first, then RECENT shows, then the rest.
         for (ShowModel show : homeShows) {
             ShowRowItem item = new ShowRowItem(HOME_ICON, show.getCity(), show.getDate());
             rowItems.add(item);
+            showModels.add(show);
         }
 
         for (ShowModel show : recentShows) {
             ShowRowItem item = new ShowRowItem(RECENT_ICON, show.getCity(), show.getDate());
             rowItems.add(item);
+            showModels.add(show);
         }
 
         for (ShowModel show : otherShows) {
             ShowRowItem item = new ShowRowItem(show.getCity(), show.getDate());
             rowItems.add(item);
+            showModels.add(show);
         }
 
         ListView listView = (ListView) rootView.findViewById(R.id.shows_listview);
@@ -92,9 +100,31 @@ public class AttendFragment extends Fragment {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
+                if (mListener != null)
+                    mListener.onShowSelected(showModels.get(i));
             }
         });
         return rootView;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnShowSelectedListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnShowSelectedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnShowSelectedListener {
+        public void onShowSelected(ShowModel show);
     }
 }
