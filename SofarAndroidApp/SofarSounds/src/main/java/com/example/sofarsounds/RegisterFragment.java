@@ -62,8 +62,8 @@ public class RegisterFragment extends Fragment {
             errors.add("Invalid e-mail address.");
         }
 
-        if (!matchingPasswords(password.getText().toString(), password2.getText().toString())) {
-            errors.add("Passwords don't match.");
+        if (validPassword(password.getText().toString(), password2.getText().toString()) != null) {
+            errors.add(validPassword(password.getText().toString(), password2.getText().toString()));
         }
 
         if (errors.size() > 0) {
@@ -75,7 +75,7 @@ public class RegisterFragment extends Fragment {
             String errorHtml = "";
             Iterator<String> iterator = errors.iterator();
             while(iterator.hasNext()) {
-                errorHtml += "&#8226;" + iterator.next() + "<br/>";
+                errorHtml += "&#8226; \t" + iterator.next() + "<br/>";
             }
 
             final TextView errorView = (TextView) dialog.findViewById(R.id.errors);
@@ -122,7 +122,14 @@ public class RegisterFragment extends Fragment {
         }
     }
 
-    public final static boolean matchingPasswords(CharSequence p1, CharSequence p2) {
-        return p1 != null && p1.length() > 0 && p1.equals(p2);
+    public final static String validPassword(CharSequence p1, CharSequence p2) {
+        if (p1 != null && p1.length() <= 0) {
+            return "No password entered.";
+        } else if (p2 != null && p2.length() <= 0) {
+            return "No confirmation password entered.";
+        } else if (!p1.equals(p2)) {
+            return "Passwords don't match.";
+        }
+        return null;
     }
 }
