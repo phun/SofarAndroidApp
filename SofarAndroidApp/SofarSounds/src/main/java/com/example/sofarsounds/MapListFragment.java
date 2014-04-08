@@ -25,6 +25,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -56,7 +57,7 @@ public class MapListFragment extends Fragment {
             "Reykjavik", "Rio", "San Francisco", "San Jose (Costa Rica)", "Santiago", "Seattle",
             "Singapore", "Stockholm", "Sydney", "São Paulo", "Tallinn", "Tokyo", "Toronto",
             "Vilnius", "Winchester", "York" };
-    private String nearestCity = "Boston";
+    private String nearestCity = "Boston, MA";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -82,10 +83,55 @@ public class MapListFragment extends Fragment {
         sharedPref = context.getSharedPreferences(
                 getString(R.string.pref_file_key), Context.MODE_PRIVATE);
 
+        showNearestCityDialog();
+
+        final SearchView searchView = (SearchView) rootView.findViewById(R.id.search);
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String s) {
+                Geocoder coder = new Geocoder(getActivity().getApplicationContext());
+                List<Address> address;
+
+                try {
+                    address = coder.getFromLocationName(s, 5);
+                    if (address == null) {
+                        return false;
+                    }
+
+                    Address location = address.get(0);
+                    location.getLatitude();
+                    location.getLongitude();
+
+                    Location locationObj = new Location("Searched Location");
+                    locationObj.setLongitude(location.getLongitude());
+                    locationObj.setLatitude(location.getLatitude());
+
+
+                    ChangeNearestCity(locationObj);
+                    showNearestCityDialog();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                return false;
+            }
+        });
+
+        return rootView;
+    }
+
+    private void showNearestCityDialog() {
         final Dialog dialog = new Dialog(getActivity());
 
         dialog.setContentView(R.layout.nearest_city_dialog);
         dialog.setTitle("Nearest City Found!");
+
+        TextView textView = (TextView) dialog.findViewById(R.id.city);
+        textView.setText(nearestCity);
 
         Button saveButton = (Button) dialog.findViewById(R.id.save);
         saveButton.setOnClickListener(new View.OnClickListener() {
@@ -101,8 +147,6 @@ public class MapListFragment extends Fragment {
             }
         });
         dialog.show();
-
-        return rootView;
     }
 
     private void showConfirmationDialog(final String city) {
@@ -133,6 +177,8 @@ public class MapListFragment extends Fragment {
     private void setCity(String city) {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.reg_city), city);
+        editor.commit();
+        Log.v(TAG, sharedPref.getString(getString(R.string.reg_city), "Boston"));
         submitRegistration();
     }
 
@@ -142,16 +188,16 @@ public class MapListFragment extends Fragment {
         Fragment newFragment = new Home();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.initial_container, newFragment);
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         getFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
         transaction.commit();
     }
 
-    private String nearestCity(Location location) {
+    private void ChangeNearestCity(Location location) {
         double longitude = location.getLongitude();
         double latitude = location.getLatitude();
 
         float nearestDistance = Float.MAX_VALUE;
-        String nearestCity = "";
 
         Log.v(TAG, "LONG: " + String.valueOf(longitude));
         Log.v(TAG, "LAT: " + String.valueOf(latitude));
@@ -180,7 +226,6 @@ public class MapListFragment extends Fragment {
             }
             Log.v(TAG, "nearest: " + nearestCity);
         }
-        return nearestCity;
     }
 
     private class StableArrayAdapter extends ArrayAdapter<String> {

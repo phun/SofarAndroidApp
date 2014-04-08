@@ -19,6 +19,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -37,6 +38,7 @@ import java.util.Scanner;
  *
  */
 public class Home extends Fragment {
+    private SharedPreferences sharedPref;
     private ProfileModel currentUserProfile;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,6 +51,16 @@ public class Home extends Fragment {
                 showAttendScreen();
             }
         });
+
+        Context context = rootView.getContext();
+        sharedPref = context.getSharedPreferences(
+                getString(R.string.pref_file_key), Context.MODE_PRIVATE);
+
+        final TextView cityText = (TextView) rootView.findViewById(R.id.city);
+        final String cityName = sharedPref.getString(getString(R.string.reg_city), "Boston");
+        if (cityName != null) {
+            cityText.setText(cityName);
+        }
 
         final Button showsButton = (Button) rootView.findViewById(R.id.showsButton);
         showsButton.setOnClickListener(new View.OnClickListener() {

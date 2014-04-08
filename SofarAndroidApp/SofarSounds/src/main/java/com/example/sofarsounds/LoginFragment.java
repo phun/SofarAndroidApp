@@ -33,6 +33,7 @@ public class LoginFragment extends Fragment {
         Fragment newFragment = new Home();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.initial_container, newFragment);
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
         transaction.addToBackStack(null);
         transaction.commit();
     }
