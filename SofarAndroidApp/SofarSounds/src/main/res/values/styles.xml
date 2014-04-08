@@ -5,4 +5,12 @@
         <!-- Customize your theme here. -->
     </style>
 
+    <style name="black_button" >
+        <item name="android:background">@drawable/abc_ab_solid_dark_holo</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:layout_margin">5dp</item>
+    </style>
+
+
+
 </resources>

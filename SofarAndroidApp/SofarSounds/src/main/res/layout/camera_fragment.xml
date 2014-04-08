@@ -9,9 +9,28 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        />
+        >
 
-    <Button
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="@string/camera"
+            android:id="@+id/textView"
+            android:layout_gravity="left|top"
+            android:layout_margin="10dp"
+            android:textSize="24dp" />
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageView"
+            android:layout_gravity="center"
+            android:background="@drawable/empty_avatar"
+            android:layout_margin="2dp" />
+    </FrameLayout>
+
+    <Button style="@style/black_button"
         android:id="@+id/capture_button"
         android:text="Capture"
         android:layout_width="fill_parent"
@@ -19,12 +38,12 @@
         android:layout_gravity="center"
         />
 
-    <Button
+    <Button style="@style/black_button"
         android:id="@+id/skip_button"
         android:text="Skip"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        />
+        android:background="@android:color/darker_gray" />
 
 </LinearLayout>

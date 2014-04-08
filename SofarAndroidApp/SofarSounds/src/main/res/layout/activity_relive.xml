@@ -1,0 +1,90 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.sofarsounds.ReliveActivity"
+    android:clickable="true"
+    android:gravity="center">
+
+    <ImageView
+        android:src="@drawable/relive_bg"
+        android:id="@+id/main_backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Max Garcia Conover"
+            android:id="@+id/textView"
+            android:layout_gravity="center_horizontal"
+            android:textSize="32dp"
+            android:textStyle="bold"
+            android:textColor="@android:color/primary_text_dark" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:text="Boston, MA"
+            android:id="@+id/textView2"
+            android:layout_gravity="center_horizontal"
+            android:textColor="@android:color/primary_text_dark"
+            android:textSize="20dp" />
+
+        <com.google.android.youtube.player.YouTubePlayerView
+            android:id="@+id/youtube_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:layout_marginBottom="12dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share on Twitter"
+            android:id="@+id/share_twitter"
+            android:textColor="@android:color/primary_text_dark" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Share on Facebook"
+            android:id="@+id/share_facebook"
+            android:textColor="@android:color/primary_text_dark" />
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="166dp"
+                android:layout_height="wrap_content"
+                android:text="@string/max"
+                android:id="@+id/textView3"
+                android:textColor="@android:color/primary_text_dark"
+                android:layout_margin="12dp" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:background="@drawable/maxgarciaconover"
+                android:baselineAlignBottom="false"
+                android:minHeight="30dp"
+                android:minWidth="30dp" />
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

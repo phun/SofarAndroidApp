@@ -7,11 +7,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 /**
- * Created by phun on 3/29/14.
+ * Created by phun on 4/6/14.
  */
-public class FanArtistFragment extends Fragment {
+public class CreditFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fan_artist_fragment, container, false);
+        return inflater.inflate(R.layout.credit_fragment, container, false);
     }
 }

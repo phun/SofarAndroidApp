@@ -17,6 +17,15 @@
     android:layout_height="match_parent"
     android:layout_margin="40dp">
 
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="@string/register_description"
+        android:id="@+id/textView"
+        android:layout_marginBottom="20dp" />
+
     <EditText
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -53,9 +62,10 @@
         android:ems="10"
         android:layout_gravity="center_horizontal"
         android:id="@+id/password2"
-        android:hint="Confirm Password" />
+        android:hint="Confirm Password"
+        android:layout_marginBottom="20dp" />
 
-    <Button
+    <Button style="@style/black_button"
         android:id="@+id/register_next_button"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
