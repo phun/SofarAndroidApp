@@ -1,29 +1,44 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" android:fitsSystemWindows="true" android:alwaysDrawnWithCache="false">
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true" android:src="@drawable/initial_bg"
+        android:scaleType="centerCrop"
+        android:baselineAlignBottom="true"
+        android:adjustViewBounds="false"
+        android:paddingLeft="500dp" />
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:paddingLeft="10dp"
     android:paddingRight="10dp"
     android:paddingTop="10dp"
-    android:paddingBottom="10dp" >
-
-    <ImageView
-        android:src="@drawable/sofar_sounds_logo"
-        android:layout_width="fill_parent"
-        android:layout_height="200dp"
-        android:layout_marginBottom="10dp" />
-
-    <Button
-        android:id="@+id/initial_login_button"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/login" />
+    android:paddingBottom="10dp">
 
     <Button
         android:id="@+id/initial_register_button"
-        android:layout_width="fill_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/register" />
+        android:text="@string/register"
+        android:textColor="#ccc"
+        android:layout_gravity="left" />
+
+    <Button
+        android:id="@+id/initial_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/login"
+        android:textColor="#ccc"
+        android:paddingBottom="10dp"
+        android:layout_marginBottom="15dp"
+        android:layout_gravity="right" />
 
 
 </LinearLayout>
+</RelativeLayout>
