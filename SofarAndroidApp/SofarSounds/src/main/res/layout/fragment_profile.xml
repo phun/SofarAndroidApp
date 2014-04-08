@@ -12,76 +12,33 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
-        tools:context="com.example.sofarsounds.Profile">
+        tools:context="com.example.sofarsounds.Profile"
+        android:layout_gravity="right|center_vertical">
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/imageView" />
 
-        <TextView
+
+        <ListView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "name"
-            android:id="@+id/profileName"
+            android:id="@+id/listView"
+            android:layout_below="@+id/imageView"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_above="@+id/profileHomeCity"
-            android:layout_alignRight="@+id/profileShows"
-            android:layout_alignEnd="@+id/profileShows" />
+            android:layout_marginTop="151dp"
+            android:entries="@array/interestedList"
+            android:clickable="true" />
 
-        <TextView
+        <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "homeCity"
-            android:id="@+id/profileHomeCity"
-            android:layout_above="@+id/profileRegistered"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "interested"
-            android:id="@+id/profileInterested"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/profileHomeCity"
-            android:layout_alignStart="@+id/profileHomeCity" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "registered"
-            android:id="@+id/profileRegistered"
-            android:layout_above="@+id/profileWaitlisted"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "waitlisted"
-            android:id="@+id/profileWaitlisted"
-
-            android:layout_above="@+id/profileInterested"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "shows"
-            android:id="@+id/profileShows"
-            android:layout_below="@+id/profileInterested"
-            android:layout_toRightOf="@+id/imageView" />
+            android:id="@+id/imageView2"
+            android:layout_below="@+id/imageView"
+            android:layout_toRightOf="@+id/imageView"
+            android:layout_marginTop="86dp" />
     </RelativeLayout>
 
 
