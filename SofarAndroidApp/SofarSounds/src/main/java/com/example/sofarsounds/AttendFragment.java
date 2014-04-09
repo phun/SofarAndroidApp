@@ -1,20 +1,25 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.android.internal.util.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 
@@ -104,6 +109,7 @@ public class AttendFragment extends Fragment {
                     mListener.onShowSelected(showModels.get(i));
             }
         });
+
         return rootView;
     }
 

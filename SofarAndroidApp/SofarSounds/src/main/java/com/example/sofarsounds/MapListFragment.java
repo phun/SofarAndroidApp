@@ -27,6 +27,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -126,6 +127,14 @@ public class MapListFragment extends Fragment {
             }
         });
 
+        ImageButton gpsButton = (ImageButton) rootView.findViewById(R.id.gps);
+        gpsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showNearestCityDialog();
+            }
+        });
+
         return rootView;
     }
 
@@ -151,6 +160,7 @@ public class MapListFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
         dialog.show();
     }
 

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,11 +30,12 @@ public class RegisterFragment extends Fragment {
     private EditText email;
     private EditText password;
     private EditText password2;
+    private View rootView;
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.register_fragment, container, false);
+        rootView = inflater.inflate(R.layout.register_fragment, container, false);
 
         Context context = rootView.getContext();
         sharedPref = context.getSharedPreferences(
@@ -106,6 +108,11 @@ public class RegisterFragment extends Fragment {
     }
 
     private void showCameraScreen() {
+
+        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
+
         Fragment newFragment = new CameraFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);

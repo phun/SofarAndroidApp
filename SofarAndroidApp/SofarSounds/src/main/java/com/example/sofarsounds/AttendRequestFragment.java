@@ -1,6 +1,7 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.app.Fragment;
 import android.net.Uri;
 import android.os.Bundle;
@@ -79,6 +80,15 @@ public class AttendRequestFragment extends Fragment {
                 }
             }
         });
+
+        Button requestButton = (Button) rootView.findViewById(R.id.request_button);
+        requestButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                displayRequestSent();
+            }
+        });
+
         return rootView;
     }
 
@@ -99,6 +109,23 @@ public class AttendRequestFragment extends Fragment {
         super.onDetach();
         mListener = null;
     }
+
+    private void displayRequestSent() {
+        final Dialog dialog = new Dialog(getActivity());
+
+        dialog.setContentView(R.layout.attend_request_dialog);
+        dialog.setTitle("Request Sent!");
+
+        final Button okay = (Button) dialog.findViewById(R.id.okay);
+        okay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+        dialog.show();
+    }
+
 
     /**
      * This interface must be implemented by activities that contain this
