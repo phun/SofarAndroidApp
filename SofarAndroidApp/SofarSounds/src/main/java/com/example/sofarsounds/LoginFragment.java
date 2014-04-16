@@ -31,7 +31,7 @@ public class LoginFragment extends Fragment {
         // TODO: Make this real.
         SofarSession.openNewSession(getActivity().getApplicationContext(), "foo", "bar");
 
-        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
     }
 }

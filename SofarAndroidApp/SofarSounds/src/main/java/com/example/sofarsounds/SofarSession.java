@@ -37,6 +37,7 @@ public class SofarSession {
         SofarSession sess = new SofarSession(ctx, "UPDATE WITH SERVER RANDOM STRING HERE");
         SharedPreferences.Editor e = getStorage(ctx).edit();
         e.putString("session_id", sess.sessionID);
+        e.commit();
         return sess;
     }
 
@@ -45,6 +46,7 @@ public class SofarSession {
         // if (this.equals(getCurrentSession())) { OOH WEIRD RACE CONDITION
         SharedPreferences.Editor e = getStorage(context).edit();
         e.remove("session_id");
+        e.commit();
     }
 
     public boolean equals(Object other) {

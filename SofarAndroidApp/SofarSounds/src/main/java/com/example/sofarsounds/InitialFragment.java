@@ -55,7 +55,7 @@ public class InitialFragment extends Fragment {
     }
 
     private void showRegisterScreen() {
-        Intent intent = new Intent(getActivity().getApplicationContext(), RegisterActivity.class);
+        Intent intent = new Intent(getActivity(), RegisterActivity.class);
         startActivity(intent);
     }
 

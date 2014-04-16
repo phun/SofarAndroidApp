@@ -16,7 +16,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_intial);
 
         if (savedInstanceState == null) {
-            if (!SofarSession.hasValidSession(this)) {
+            if (!SofarSession.hasValidSession(getApplicationContext())) {
                 Intent intent = new Intent(this, InitialActivity.class);
                 startActivity(intent);
             } else {
@@ -29,7 +29,6 @@ public class MainActivity extends ActionBarActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
@@ -43,6 +42,11 @@ public class MainActivity extends ActionBarActivity {
         int id = item.getItemId();
         if (id == R.id.action_settings) {
             return true;
+        } else if (id == R.id.action_logout) {
+            final SofarSession session = SofarSession.getCurrentSession(getApplicationContext());
+            session.close();
+            Intent intent = new Intent(this, InitialActivity.class);
+            startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
     }
