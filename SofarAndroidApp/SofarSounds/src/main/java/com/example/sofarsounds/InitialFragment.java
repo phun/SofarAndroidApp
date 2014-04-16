@@ -4,30 +4,29 @@ package com.example.sofarsounds;
  * Created by phun on 3/27/14.
  */
 
-import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
 /**
- * A placeholder fragment containing a simple view.
+ * Fragment that has the login / register buttons
  */
-public class MainFragment extends Fragment {
+public class InitialFragment extends Fragment {
 
-    private static final String TAG = "MainFragment";
+    private static final String TAG = "InitialFragment";
 
-    public MainFragment() {
+    public InitialFragment() {
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.main_fragment, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_initial, container, false);
 
         final Button loginButton = (Button) rootView.findViewById(R.id.initial_login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {
@@ -56,12 +55,8 @@ public class MainFragment extends Fragment {
     }
 
     private void showRegisterScreen() {
-        Fragment newFragment = new RegisterFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        Intent intent = new Intent(getActivity().getApplicationContext(), RegisterActivity.class);
+        startActivity(intent);
     }
 
 

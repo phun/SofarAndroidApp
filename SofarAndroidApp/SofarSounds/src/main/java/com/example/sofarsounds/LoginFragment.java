@@ -2,6 +2,7 @@ package com.example.sofarsounds;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -30,11 +31,7 @@ public class LoginFragment extends Fragment {
         // TODO: Make this real.
         SofarSession.openNewSession(getActivity().getApplicationContext(), "foo", "bar");
 
-        Fragment newFragment = new Home();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        transaction.addToBackStack(null);
-        transaction.commit();
+        Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
+        startActivity(intent);
     }
 }

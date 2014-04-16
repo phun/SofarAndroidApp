@@ -1,7 +1,7 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
-import android.content.SharedPreferences;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,15 +16,13 @@ public class InitialActivity extends Activity implements AttendFragment.OnShowSe
         setContentView(R.layout.activity_intial);
 
         if (savedInstanceState == null) {
-
             if (!SofarSession.hasValidSession(this)) {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.initial_container, new MainFragment())
+                        .add(R.id.initial_container, new InitialFragment())
                         .commit();
             } else {
-                getFragmentManager().beginTransaction()
-                        .add(R.id.initial_container, new Home())
-                        .commit();
+                Intent intent = new Intent(this, MainActivity.class);
+                startActivity(intent);
             }
         }
     }
@@ -40,7 +38,7 @@ public class InitialActivity extends Activity implements AttendFragment.OnShowSe
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the HomeFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {

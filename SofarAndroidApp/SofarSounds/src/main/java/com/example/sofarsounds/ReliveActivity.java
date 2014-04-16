@@ -1,6 +1,5 @@
 package com.example.sofarsounds;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -19,8 +18,16 @@ import java.net.URLEncoder;
 
 public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer.OnInitializedListener {
 
-    static private final String DEVELOPER_KEY = "AIzaSyAXMIPdZE8YBOUHtmP5JXdVhiM1wixCWAE";
-    static private final String VIDEO = "nfO4Xs1HdSU";
+    static public final String DEVELOPER_KEY = "AIzaSyAXMIPdZE8YBOUHtmP5JXdVhiM1wixCWAE";
+    static public final String DEFAULT_VIDEO = "nfO4Xs1HdSU";
+
+    private String videoId = DEFAULT_VIDEO;
+
+    public ReliveActivity(String videoId) {
+        if (videoId != null && videoId.length() > 0) {
+            this.videoId = videoId;
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +63,7 @@ public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the HomeFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
@@ -67,8 +74,7 @@ public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer
 
     @Override
     public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
-        youTubePlayer.loadVideo(VIDEO);
-        youTubePlayer.pause();
+       youTubePlayer.loadVideo(videoId);
     }
 
     @Override
@@ -77,7 +83,7 @@ public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer
     }
 
     private String getMessage() {
-        return "This was an awesome show! http://youtu.be/" + VIDEO;
+        return "This was an awesome show! http://youtu.be/" + videoId;
     }
 
     private void postTweet() {

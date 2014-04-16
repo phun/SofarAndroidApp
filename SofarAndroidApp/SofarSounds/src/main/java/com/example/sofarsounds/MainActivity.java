@@ -7,15 +7,25 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 
 public class MainActivity extends ActionBarActivity {
 
-    // url to make request
-    private static String url = "http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile";
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_intial);
 
+        if (savedInstanceState == null) {
+            if (!SofarSession.hasValidSession(this)) {
+                Intent intent = new Intent(this, InitialActivity.class);
+                startActivity(intent);
+            } else {
+                getFragmentManager().beginTransaction()
+                        .add(R.id.initial_container, new HomeFragment())
+                        .commit();
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -28,7 +38,7 @@ public class MainActivity extends ActionBarActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
+        // automatically handle clicks on the HomeFragment/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {

@@ -56,4 +56,7 @@
         <item>Buenos Aires 10th April</item>
         <item>Bogotá 11th April</item>
     </string-array>
+
+    <string name="title_activity_register">RegisterActivity</string>
+
 </resources>

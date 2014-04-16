@@ -29,7 +29,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.Scanner;
 
-public class Home extends Fragment {
+public class HomeFragment extends Fragment {
     private SharedPreferences sharedPref;
     private ProfileModel currentUserProfile;
     @Override

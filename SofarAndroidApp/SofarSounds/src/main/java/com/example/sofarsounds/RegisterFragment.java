@@ -116,7 +116,7 @@ public class RegisterFragment extends Fragment {
         Fragment newFragment = new CameraFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        transaction.replace(R.id.initial_container, newFragment);
+        transaction.replace(R.id.register_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

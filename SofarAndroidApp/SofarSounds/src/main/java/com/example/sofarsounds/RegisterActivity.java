@@ -1,16 +1,20 @@
 package com.example.sofarsounds;
 
-import android.support.v7.app.ActionBarActivity;
+import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
-public class Waitlist extends ActionBarActivity {
+public class RegisterActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_waitlist);
+        setContentView(R.layout.activity_register);
+
+        getFragmentManager().beginTransaction()
+                .add(R.id.register_container, new RegisterFragment())
+                .commit();
     }
 
 
@@ -18,7 +22,7 @@ public class Waitlist extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.waitlist, menu);
+        getMenuInflater().inflate(R.menu.register, menu);
         return true;
     }
 
@@ -33,5 +37,7 @@ public class Waitlist extends ActionBarActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 
 }
