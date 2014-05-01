@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.parse.ParseAnalytics;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -36,6 +37,7 @@ public class HomeFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+        ParseAnalytics.trackEvent("HomeFragment");
         View rootView = inflater.inflate(R.layout.fragment_home, container, false);
 
         InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(

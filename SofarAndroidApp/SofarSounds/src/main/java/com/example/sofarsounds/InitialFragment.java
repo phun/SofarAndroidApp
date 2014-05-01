@@ -13,6 +13,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import com.parse.ParseAnalytics;
+
 /**
  * Fragment that has the login / register buttons
  */
@@ -27,6 +29,7 @@ public class InitialFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_initial, container, false);
+        ParseAnalytics.trackEvent("InitialFragment");
 
         final Button loginButton = (Button) rootView.findViewById(R.id.initial_login_button);
         loginButton.setOnClickListener(new View.OnClickListener() {

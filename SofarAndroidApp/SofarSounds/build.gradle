@@ -24,11 +24,10 @@ android {
 
 dependencies {
     compile 'com.android.support:appcompat-v7:+'
-    compile 'com.google.android.gms:play-services:4.0.30'
+    compile 'com.google.android.gms:play-services:4.3.23'
     compile 'com.android.support:support-v4:+'
     compile 'com.google.code.gson:gson:2.2.+'
     compile files('src/libs/YouTubeAndroidPlayerApi.jar')
-    
-    
     compile 'com.google.guava:guava-collections:r03@jar'
+    compile files('src/libs/Parse-1.5.0.jar')
 }

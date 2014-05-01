@@ -16,6 +16,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.parse.ParseAnalytics;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -36,6 +38,7 @@ public class RegisterFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.register_fragment, container, false);
+        ParseAnalytics.trackEvent("RegisterFragment");
 
         Context context = rootView.getContext();
         sharedPref = context.getSharedPreferences(

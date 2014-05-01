@@ -26,6 +26,8 @@ import android.widget.ListView;
 import android.widget.SearchView;
 import android.widget.TextView;
 
+import com.parse.ParseAnalytics;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -57,7 +59,7 @@ public class MapListFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.map_list_fragment, container, false);
-
+        ParseAnalytics.trackEvent("MapListFragment");
         final ListView listview = (ListView) rootView.findViewById(R.id.list_view);
         final ArrayList<String> list = new ArrayList<String>();
         for (int i = 0; i < CITIES.length; ++i) {

@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.parse.ParseAnalytics;
+
 
 /**
  * A simple {@link android.support.v4.app.Fragment} subclass.
@@ -66,6 +68,7 @@ public class AttendRequestFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ParseAnalytics.trackEvent("AttendRequestFragment");
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_attend_request, container, false);
 

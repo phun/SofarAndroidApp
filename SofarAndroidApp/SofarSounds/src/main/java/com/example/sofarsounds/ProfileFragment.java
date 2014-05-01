@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.parse.ParseAnalytics;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -64,6 +65,7 @@ public class ProfileFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ParseAnalytics.trackEvent("ProfileFragment");
         if (getArguments() != null) {
             name = getArguments().getString("name");
             homeCity = getArguments().getString("homeCity");

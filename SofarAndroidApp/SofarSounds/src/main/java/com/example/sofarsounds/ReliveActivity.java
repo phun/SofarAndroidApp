@@ -12,6 +12,7 @@ import com.google.android.youtube.player.YouTubeBaseActivity;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerView;
+import com.parse.ParseAnalytics;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
@@ -31,6 +32,7 @@ public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        ParseAnalytics.trackEvent("ReliveFragment");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_relive);
 

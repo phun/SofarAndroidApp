@@ -8,7 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 
 
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends ActionBarActivity implements AttendFragment.OnShowSelectedListener, AttendRequestFragment.OnRequestSubmit{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +54,18 @@ public class MainActivity extends ActionBarActivity {
     public void viewProfile(View view) {
         Intent intent = new Intent(this, Profile.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onShowSelected(ShowModel show) {
+        getFragmentManager().beginTransaction()
+                .replace(R.id.initial_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
+                .addToBackStack(null)
+                .commit();
+    }
+    @Override
+    public void onRequestSubmit(String request) {
+
     }
 
 }

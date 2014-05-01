@@ -17,6 +17,7 @@ import android.widget.TextView;
 import com.android.internal.util.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
+import com.parse.ParseAnalytics;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -74,6 +75,7 @@ public class AttendFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+        ParseAnalytics.trackEvent("AttendFragment");
         // Inflate the layout for this fragment
         View rootView = inflater.inflate(R.layout.fragment_attend, container, false);
 

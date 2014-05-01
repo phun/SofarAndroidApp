@@ -22,6 +22,8 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.parse.ParseAnalytics;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -51,7 +53,7 @@ public class CameraFragment extends Fragment {
         final View rootView = inflater.inflate(R.layout.camera_fragment, container, false);
 
         context = rootView.getContext();
-
+        ParseAnalytics.trackEvent("CameraFragment");
         imageView = (ImageView) rootView.findViewById(R.id.imageView);
 
         final Button captureButton = (Button) rootView.findViewById(R.id.capture_button);

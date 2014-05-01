@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import com.parse.ParseAnalytics;
 
 public class InitialActivity extends Activity implements AttendFragment.OnShowSelectedListener, AttendRequestFragment.OnRequestSubmit{
 
@@ -14,6 +15,7 @@ public class InitialActivity extends Activity implements AttendFragment.OnShowSe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_intial);
+        ParseAnalytics.trackAppOpened(this.getIntent());
 
         if (savedInstanceState == null) {
             if (!SofarSession.hasValidSession(this)) {
