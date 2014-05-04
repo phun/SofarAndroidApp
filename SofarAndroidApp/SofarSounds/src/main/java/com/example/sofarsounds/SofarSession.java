@@ -2,6 +2,8 @@ package com.example.sofarsounds;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import com.parse.ParseException;
+import com.parse.ParseUser;
 
 /**
  * Created by lucid on 4/7/14.
@@ -14,14 +16,10 @@ public class SofarSession {
         this.sessionID = sessionID;
     }
 
-    private static SharedPreferences getStorage(Context ctx) {
-        return ctx.getSharedPreferences(ctx.getString(R.string.session_preference_id), Context.MODE_PRIVATE);
-    }
-
     public static SofarSession getCurrentSession(Context ctx) {
-        SharedPreferences storage = getStorage(ctx);
-        if (storage.contains("session_id"))
-            return new SofarSession(ctx, storage.getString("session_id", null));
+        ParseUser current = ParseUser.getCurrentUser();
+        if (current != null)
+            return new SofarSession(ctx, current.getSessionToken());
         else
             return null;
     }
@@ -31,22 +29,15 @@ public class SofarSession {
         return getCurrentSession(ctx) != null;
     }
 
-    public static SofarSession openNewSession(Context ctx, String username, String password) {
+    public static SofarSession openNewSession(Context ctx, String username, String password) throws ParseException {
         if (getCurrentSession(ctx) != null)
             getCurrentSession(ctx).close();
-        SofarSession sess = new SofarSession(ctx, "UPDATE WITH SERVER RANDOM STRING HERE");
-        SharedPreferences.Editor e = getStorage(ctx).edit();
-        e.putString("session_id", sess.sessionID);
-        e.commit();
-        return sess;
+        ParseUser pu = ParseUser.logIn(username, password);
+        return new SofarSession(ctx, pu.getSessionToken());
     }
 
     public void close() {
-        // TODO: Issue a logout / invalidate session on server.
-        // if (this.equals(getCurrentSession())) { OOH WEIRD RACE CONDITION
-        SharedPreferences.Editor e = getStorage(context).edit();
-        e.remove("session_id");
-        e.commit();
+        ParseUser.logOut();
     }
 
     public boolean equals(Object other) {

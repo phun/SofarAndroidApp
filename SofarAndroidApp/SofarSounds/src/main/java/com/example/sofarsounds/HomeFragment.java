@@ -16,6 +16,7 @@ import android.widget.TextView;
 
 import com.google.gson.Gson;
 import com.parse.ParseAnalytics;
+import com.parse.ParseUser;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -111,7 +112,8 @@ public class HomeFragment extends Fragment {
     }
 
     private void showProfileScreen() {
-        Fragment newFragment = ProfileFragment.newInstance(currentUserProfile.getName(), currentUserProfile.getHomeCity(), currentUserProfile.getProfilePic());
+        ParseUser user = ParseUser.getCurrentUser();
+        Fragment newFragment = ProfileFragment.newInstance(user.get("fullName").toString(), currentUserProfile.getHomeCity(), currentUserProfile.getProfilePic());
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.initial_container, newFragment);
         transaction.addToBackStack(null);

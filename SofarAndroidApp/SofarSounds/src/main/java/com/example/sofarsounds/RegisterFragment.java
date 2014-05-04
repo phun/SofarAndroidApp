@@ -1,5 +1,6 @@
 package com.example.sofarsounds;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
 import android.app.FragmentTransaction;
@@ -33,7 +34,7 @@ public class RegisterFragment extends Fragment {
     private EditText password;
     private EditText password2;
     private View rootView;
-
+    private OnUserRegisteredListener mListener;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -106,22 +107,10 @@ public class RegisterFragment extends Fragment {
             Log.v("REG", sharedPref.getString(getString(R.string.reg_fullname), "DEFAULT"));
             Log.v("REG", sharedPref.getString(getString(R.string.reg_email), "DEFAULT"));
             Log.v("REG", sharedPref.getString(getString(R.string.reg_password), "DEFAULT"));
-            showCameraScreen();
+
+            if (mListener != null)
+                mListener.onUserRegistered(email.getText().toString(), password.getText().toString(), fullname.getText().toString());
         }
-    }
-
-    private void showCameraScreen() {
-
-        InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(
-                Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(rootView.getWindowToken(), 0);
-
-        Fragment newFragment = new CameraFragment();
-        FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
-        transaction.replace(R.id.register_container, newFragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
     }
 
     public final static boolean isValidEmail(CharSequence target) {
@@ -141,5 +130,26 @@ public class RegisterFragment extends Fragment {
             return "Passwords don't match.";
         }
         return null;
+    }
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        try {
+            mListener = (OnUserRegisteredListener) activity;
+        } catch (ClassCastException e) {
+            throw new ClassCastException(activity.toString()
+                    + " must implement OnShowSelectedListener");
+        }
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        mListener = null;
+    }
+
+    public interface OnUserRegisteredListener {
+        public void onUserRegistered(String email, String password, String fullName);
     }
 }

@@ -1,13 +1,25 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import com.parse.ParseAnalytics;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class InitialActivity extends Activity implements AttendFragment.OnShowSelectedListener, AttendRequestFragment.OnRequestSubmit{
+import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseUser;
+import com.parse.SignUpCallback;
+
+public class InitialActivity extends Activity {
 
     private static final String TAG = "InitialActivity";
 
@@ -49,16 +61,5 @@ public class InitialActivity extends Activity implements AttendFragment.OnShowSe
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onShowSelected(ShowModel show) {
-        getFragmentManager().beginTransaction()
-                .replace(R.id.initial_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
-                .addToBackStack(null)
-                .commit();
-    }
 
-    @Override
-    public void onRequestSubmit(String request) {
-
-    }
 }

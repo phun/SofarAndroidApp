@@ -187,8 +187,6 @@ public class MapListFragment extends Fragment {
     }
 
     public void submitRegistration() {
-        SofarSession.openNewSession(getActivity().getApplicationContext(), "foo", "bar");
-
         Intent intent = new Intent(getActivity().getApplicationContext(), MainActivity.class);
         startActivity(intent);
     }

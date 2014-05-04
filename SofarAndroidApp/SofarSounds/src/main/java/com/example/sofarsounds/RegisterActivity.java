@@ -1,11 +1,22 @@
 package com.example.sofarsounds;
 
 import android.app.Activity;
+import android.app.Dialog;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.TextView;
 
-public class RegisterActivity extends Activity {
+import com.parse.ParseException;
+import com.parse.ParseUser;
+
+public class RegisterActivity extends Activity implements RegisterFragment.OnUserRegisteredListener {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +49,43 @@ public class RegisterActivity extends Activity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onUserRegistered(String email, String password, String fullName) {
+        ParseUser user = new ParseUser();
+        user.setUsername(email);
+        user.setPassword(password);
+        user.setEmail(email);
+        user.put("fullName", fullName);
+        try {
+            user.signUp();
+            showCameraScreen();
+        } catch (ParseException pe) {
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.registration_errors_dialog);
+            dialog.setTitle("Uh oh!");
+            final TextView errorView = (TextView) dialog.findViewById(R.id.errors);
+            errorView.setText(pe.getMessage());
+            final Button okay = (Button) dialog.findViewById(R.id.okay);
+            okay.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+            dialog.show();
+        }
+    }
 
+    private void showCameraScreen() {
+        InputMethodManager imm = (InputMethodManager) getSystemService(
+                Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(getWindow().getDecorView().getRootView().getWindowToken(), 0);
 
+        Fragment newFragment = new CameraFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.setCustomAnimations(R.anim.fade_in, R.anim.fade_out, R.anim.fade_in, R.anim.fade_out);
+        transaction.replace(R.id.register_container, newFragment);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }
