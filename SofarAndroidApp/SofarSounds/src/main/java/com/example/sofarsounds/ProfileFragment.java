@@ -17,7 +17,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.gson.Gson;
+import com.parse.GetCallback;
+import com.parse.GetDataCallback;
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseObject;
+import com.parse.ParseUser;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -69,9 +75,7 @@ public class ProfileFragment extends Fragment {
         if (getArguments() != null) {
             name = getArguments().getString("name");
             homeCity = getArguments().getString("homeCity");
-            String encodedPic = getArguments().getString("profilePic");
-            byte[] decodedString = Base64.decode(encodedPic, Base64.DEFAULT);
-            profilePic = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+
         }
     }
 
@@ -79,9 +83,29 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         final View rootView = inflater.inflate(R.layout.fragment_profile, container, false);
-        ((TextView) rootView.findViewById(R.id.profileName)).setText(name);
-        ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(homeCity);
-        ((ImageView) rootView.findViewById(id.profile_pic)).setImageBitmap(profilePic);
+
+
+        ParseUser current = ParseUser.getCurrentUser();
+        try {
+            current.fetchIfNeeded();
+        } catch (ParseException pe) {
+
+        }
+        ((TextView) rootView.findViewById(R.id.profileName)).setText(current.get("fullName").toString());
+        ((TextView) rootView.findViewById(R.id.profileHomeCity)).setText(current.get("currentCity").toString());
+        if (current != null && current.has("profilePicture")) {
+
+            ParseFile profileFile = (ParseFile) current.get("profilePicture");
+                profileFile.getDataInBackground(new GetDataCallback() {
+                    @Override
+                    public void done(byte[] bytes, ParseException e) {
+                        if (e != null)
+                            return;
+                        profilePic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+                        ((ImageView) rootView.findViewById(id.profile_pic)).setImageBitmap(profilePic);
+                    }
+                });
+        }
         return rootView;
     }
 

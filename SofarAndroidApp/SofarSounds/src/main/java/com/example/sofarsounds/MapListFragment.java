@@ -27,6 +27,7 @@ import android.widget.SearchView;
 import android.widget.TextView;
 
 import com.parse.ParseAnalytics;
+import com.parse.ParseUser;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -183,6 +184,10 @@ public class MapListFragment extends Fragment {
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(getString(R.string.reg_city), city);
         editor.commit();
+
+        ParseUser current = ParseUser.getCurrentUser();
+        current.put("currentCity", city);
+        current.saveInBackground();
         submitRegistration();
     }
 

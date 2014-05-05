@@ -23,7 +23,12 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import com.parse.ParseAnalytics;
+import com.parse.ParseException;
+import com.parse.ParseFile;
+import com.parse.ParseUser;
+import com.parse.SaveCallback;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -115,9 +120,23 @@ public class CameraFragment extends Fragment {
         if (requestCode == CAMERA_RESULT) {
             try {
                 Bitmap bitmap = MediaStore.Images.Media.getBitmap( context.getContentResolver(),  capturedImageUri);
+                ByteArrayOutputStream baos = new ByteArrayOutputStream(1024);
+                bitmap.compress(Bitmap.CompressFormat.JPEG, 80, baos);
+                final ParseFile profileFile = new ParseFile("profile.jpg", baos.toByteArray());
+                profileFile.saveInBackground(
+                        new SaveCallback() {
+                            @Override
+                            public void done(ParseException e) {
+                                ParseUser current = ParseUser.getCurrentUser();
+                                current.put("profilePicture", profileFile);
+                                current.saveInBackground();
+                            }
+                        }
+                );
                 imageView.setBackground(null);
                 imageView.setImageBitmap(bitmap);
                 Log.v(TAG, "bitmap created.");
+                showMapScreen();
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
