@@ -30,6 +30,9 @@ public class ReliveActivity extends YouTubeBaseActivity implements YouTubePlayer
         }
     }
 
+    public ReliveActivity() {}
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         ParseAnalytics.trackEvent("ReliveFragment");
