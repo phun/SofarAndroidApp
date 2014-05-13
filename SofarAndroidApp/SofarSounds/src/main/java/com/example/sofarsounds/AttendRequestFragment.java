@@ -3,13 +3,18 @@ package com.example.sofarsounds;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.Fragment;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.MediaController;
 import android.widget.TextView;
+import android.widget.VideoView;
 
 import com.parse.ParseAnalytics;
 
@@ -24,6 +29,9 @@ import com.parse.ParseAnalytics;
  *
  */
 public class AttendRequestFragment extends Fragment {
+
+    static final int REQUEST_VIDEO_CAPTURE = 1;
+
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "city";
@@ -33,14 +41,16 @@ public class AttendRequestFragment extends Fragment {
     private String mParam1;
     private String mParam2;
 
+    Button recordButton;
+
     private OnRequestSubmit mListener;
 
     /**
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
+     * @param city Parameter 1.
+     * @param date Parameter 2.
      * @return A new instance of fragment AttendRequestFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -92,7 +102,22 @@ public class AttendRequestFragment extends Fragment {
             }
         });
 
+        recordButton = (Button) rootView.findViewById(R.id.record_button);
+        recordButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dispatchTakeVideoIntent();
+            }
+        });
+
         return rootView;
+    }
+
+    private void dispatchTakeVideoIntent() {
+        Intent takeVideoIntent = new Intent(MediaStore.ACTION_VIDEO_CAPTURE);
+        if (takeVideoIntent.resolveActivity(getActivity().getPackageManager()) != null) {
+            startActivityForResult(takeVideoIntent, REQUEST_VIDEO_CAPTURE);
+        }
     }
 
 
@@ -111,6 +136,43 @@ public class AttendRequestFragment extends Fragment {
     public void onDetach() {
         super.onDetach();
         mListener = null;
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_VIDEO_CAPTURE && resultCode == getActivity().RESULT_OK) {
+            Uri videoUri = data.getData();
+            Log.v("c", videoUri.toString());
+            final Dialog dialog = new Dialog(getActivity());
+
+            MediaController mediaController = new MediaController(this.getActivity());
+
+            dialog.setContentView(R.layout.fragment_video);
+            dialog.setTitle("Add Video?");
+            final VideoView videoView = (VideoView) dialog.findViewById(R.id.videoView);
+            videoView.setVideoURI(videoUri);
+            videoView.setMediaController(mediaController);
+            videoView.start();
+
+            Button addButton = (Button) dialog.findViewById(R.id.add);
+            addButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                    recordButton.setText("Video Added (" + videoView.getDuration() + "ms)");
+                }
+            });
+
+            Button cancelButton = (Button) dialog.findViewById(R.id.cancel);
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    dialog.dismiss();
+                }
+            });
+
+            dialog.show();
+        }
     }
 
     private void displayRequestSent() {

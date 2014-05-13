@@ -43,6 +43,11 @@ public class AttendFragment extends Fragment {
     private List<ShowModel> recentShows;
     private List<ShowModel> otherShows;
     // TODO: Why do the convoluted newInstance / Bundle storage thing and not this:
+
+    public AttendFragment() {
+
+    }
+
     public AttendFragment(List<ShowModel> shows, ProfileModel profile) {
         this.profile = profile;
         this.shows = shows;
@@ -61,13 +66,6 @@ public class AttendFragment extends Fragment {
             }
         }
     }
-    public static final String[] cities = new String[] { "Strawberry",
-            "Banana", "Orange", "Mixed" };
-
-    public static final String[] dates = new String[] {
-            "It is an aggregate accessory fruit",
-            "It is the largest herbaceous flowering plant", "Citrus Fruit",
-            "Mixed Fruits" };
 
     private final int HOME_ICON = R.drawable.home;
     private final int RECENT_ICON = R.drawable.android_location;

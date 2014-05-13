@@ -47,7 +47,7 @@ public class ShowListViewAdapter extends ArrayAdapter<ShowRowItem> {
         } else
             holder = (ViewHolder) convertView.getTag();
 
-        holder.txtDesc.setText(rowItem.getDate());
+        holder.txtDesc.setText(rowItem.getDate().toString());
         holder.txtTitle.setText(rowItem.getCity());
         if (rowItem.hasIcon()) {
             holder.imageView.setVisibility(View.VISIBLE);

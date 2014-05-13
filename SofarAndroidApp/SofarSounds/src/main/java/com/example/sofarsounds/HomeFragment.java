@@ -82,7 +82,7 @@ public class HomeFragment extends Fragment {
             Gson deser = new Gson();
             currentUserProfile = deser.fromJson(storage.getString("profile_data", ""), ProfileModel.class);
         } else {
-            new ProfileTask(rootView).execute("http://lucid.scripts.mit.edu/sofar/users/mvanegas/profile");
+            new ProfileTask(rootView).execute("http://phuster.com/profile.json");
         }
 
         return rootView;
@@ -96,7 +96,7 @@ public class HomeFragment extends Fragment {
     private void showAttendScreen() {
         Fragment newFragment = new AttendFragment(currentUserProfile.getShows(), currentUserProfile);
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
+        transaction.replace(R.id.main_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }
@@ -115,7 +115,7 @@ public class HomeFragment extends Fragment {
         ParseUser user = ParseUser.getCurrentUser();
         Fragment newFragment = ProfileFragment.newInstance(user.get("fullName").toString(), currentUserProfile.getHomeCity(), currentUserProfile.getProfilePic());
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
-        transaction.replace(R.id.initial_container, newFragment);
+        transaction.replace(R.id.main_container, newFragment);
         transaction.addToBackStack(null);
         transaction.commit();
     }

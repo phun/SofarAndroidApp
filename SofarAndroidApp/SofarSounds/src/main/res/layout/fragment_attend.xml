@@ -9,7 +9,8 @@
         android:orientation="vertical"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:padding="20dp">
+        android:padding="0dp"
+        android:background="#3399FF">
 
         <HorizontalScrollView
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -19,7 +20,10 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -28,14 +32,15 @@
                 android:text="View secret gigs in:"
                 android:id="@+id/textView"
                 android:layout_marginLeft="5dp"
-                android:layout_marginRight="5dp" />
+                android:layout_marginRight="5dp"
+                android:textColor="#FFFFFF" />
 
             <Spinner
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
                 android:id="@+id/spinner"
                 android:entries="@array/months_array"
-                android:spinnerMode="dropdown"
+                android:spinnerMode="dialog"
                 android:layout_below="@+id/attend_greeting"
                 android:layout_toRightOf="@+id/attend_month_label"
                 android:paddingLeft="10dp"
@@ -50,7 +55,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/shows_listview"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"/>
+            android:layout_alignParentStart="true"
+            android:background="#FFFFFF" />
     </LinearLayout>
 
 </FrameLayout>

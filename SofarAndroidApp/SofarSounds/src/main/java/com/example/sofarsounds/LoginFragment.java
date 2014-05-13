@@ -49,7 +49,7 @@ public class LoginFragment extends Fragment {
         } catch (ParseException pe) {
             final Dialog dialog = new Dialog(getActivity());
             dialog.setContentView(R.layout.registration_errors_dialog);
-            dialog.setTitle("Uh oh!");
+            dialog.setTitle("Invalid Login");
             final TextView errorView = (TextView) dialog.findViewById(R.id.errors);
             errorView.setText(pe.getMessage());
             final Button okay = (Button) dialog.findViewById(R.id.okay);

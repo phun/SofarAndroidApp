@@ -3,6 +3,7 @@ package com.example.sofarsounds;
 import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,7 +14,9 @@ public class MainActivity extends ActionBarActivity implements AttendFragment.On
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_intial);
+        setContentView(R.layout.activity_main);
+
+        Log.v("C", "Created");
 
         if (savedInstanceState == null) {
             if (!SofarSession.hasValidSession(getApplicationContext())) {
@@ -21,9 +24,21 @@ public class MainActivity extends ActionBarActivity implements AttendFragment.On
                 startActivity(intent);
             } else {
                 getFragmentManager().beginTransaction()
-                        .add(R.id.initial_container, new HomeFragment())
+                        .add(R.id.main_container, new HomeFragment())
                         .commit();
             }
+        }
+    }
+
+    // 2.0 and above
+    @Override
+    public void onBackPressed() {
+        int fragments = getFragmentManager().getBackStackEntryCount();
+        if (fragments == 1) {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+        } else {
+            super.onBackPressed();
         }
     }
 
@@ -59,7 +74,7 @@ public class MainActivity extends ActionBarActivity implements AttendFragment.On
     @Override
     public void onShowSelected(ShowModel show) {
         getFragmentManager().beginTransaction()
-                .replace(R.id.initial_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
+                .replace(R.id.main_container, AttendRequestFragment.newInstance(show.getCity(), show.getDate()))
                 .addToBackStack(null)
                 .commit();
     }

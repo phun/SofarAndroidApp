@@ -4,7 +4,15 @@
     android:layout_height="match_parent"
     tools:context="com.example.sofarsounds.ProfileFragment">
 
-    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <ImageView
+        android:src="@drawable/profile_bg"
+        android:id="@+id/main_backgroundImage"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:scaleType="centerCrop" />
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,83 +20,104 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:paddingBottom="@dimen/activity_vertical_margin"
+        android:orientation="vertical"
         tools:context="com.example.sofarsounds.Profile">
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/profile_pic"
-            android:layout_alignRight="@+id/profileHomeCity"
-            android:layout_alignEnd="@+id/profileHomeCity"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true" />
-
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text= "name"
             android:id="@+id/profileName"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
             android:layout_alignParentStart="true"
-            android:layout_above="@+id/profileHomeCity"
-            android:layout_alignRight="@+id/profileShows"
-            android:layout_alignEnd="@+id/profileShows" />
+            android:autoText="false"
+            android:textAlignment="center"
+            android:singleLine="false"
+            android:textSize="48dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:textStyle="bold"
+            android:textColor="#FFFFFF"
+            android:capitalize="words"
+            android:background="#674baa"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp" />
 
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text= "homeCity"
             android:id="@+id/profileHomeCity"
-            android:layout_above="@+id/profileRegistered"
+            android:layout_below="@+id/profileName"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:textColor="#674baa"
+            android:textStyle="bold"
+            android:enabled="false"
+            android:background="#FFFFFF"
+            android:paddingLeft="5dp"
+            android:layout_marginBottom="20dp" />
 
+        <ImageView
+            android:layout_width="185dp"
+            android:layout_height="185dp"
+            android:id="@+id/imageView"
+            android:layout_gravity="center_horizontal|top"
+            android:src="@drawable/phu"
+            android:layout_below="@+id/profileHomeCity"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="20dp" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "interested"
-            android:id="@+id/profileInterested"
-            android:layout_centerVertical="true"
-            android:layout_alignLeft="@+id/profileHomeCity"
-            android:layout_alignStart="@+id/profileHomeCity" />
-
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "registered"
-            android:id="@+id/profileRegistered"
-            android:layout_above="@+id/profileWaitlisted"
+            android:text="Edit Profile"
+            android:id="@+id/attendButton"
+            android:layout_alignParentTop="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right"
+            android:background="@android:color/background_light"
+            android:textColor="@android:color/primary_text_light" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "waitlisted"
-            android:id="@+id/profileWaitlisted"
-
-            android:layout_above="@+id/profileInterested"
+            android:text="Contact Support"
+            android:id="@+id/showsButton"
+            android:background="@android:color/background_light"
+            android:textColor="@android:color/primary_text_light"
+            android:layout_below="@+id/attendButton"
+            android:layout_alignParentRight="true"
             android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true" />
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="20dp"
+            android:layout_gravity="right" />
 
-        <TextView
-            android:layout_width="wrap_content"
+        <Button
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text= "shows"
-            android:id="@+id/profileShows"
-            android:layout_below="@+id/profileInterested"
-            android:layout_toRightOf="@+id/imageView" />
+            android:text="Logout"
+            android:id="@+id/profileButton"
+            android:layout_alignEnd="@+id/showsButton"
+            android:onClick="viewProfile"
+            android:background="#674baa"
+            android:textColor="#FFFFFF"
+            android:layout_below="@+id/showsButton"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_gravity="right" />
 
-    </RelativeLayout>
+
+    </LinearLayout>
 
 
 </FrameLayout>

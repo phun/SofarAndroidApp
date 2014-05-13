@@ -102,7 +102,7 @@ public class ProfileFragment extends Fragment {
                         if (e != null)
                             return;
                         profilePic = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
-                        ((ImageView) rootView.findViewById(id.profile_pic)).setImageBitmap(profilePic);
+                        //((ImageView) rootView.findViewById(id.profile_pic)).setImageBitmap(profilePic);
                     }
                 });
         }
